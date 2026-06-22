@@ -10,7 +10,7 @@ import {
 } from "@marzneshin/common/components";
 import { Link } from "@tanstack/react-router";
 import { FC } from 'react';
-import { Settings, MenuIcon, ShieldCheck } from "lucide-react";
+import { Settings, MenuIcon, Paintbrush, ShieldCheck } from "lucide-react";
 import { LanguageSwitchMenu } from "@marzneshin/features/language-switch";
 import { ThemeToggle } from "@marzneshin/features/theme-switch";
 import { useAuth, Logout } from "@marzneshin/modules/auth";
@@ -55,6 +55,14 @@ export const HeaderMenu: FC = () => {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                     </>
+                )}
+                {!isDesktop && (
+                    <DropdownMenuItem className="w-full">
+                        <Link to="/branding" className="hstack gap-1 items-center justify-between w-full h-fit p-0">
+                            {t("branding")}
+                            <Paintbrush className="size-4" />
+                        </Link>
+                    </DropdownMenuItem>
                 )}
                 <DropdownMenuItem className="w-full">
                     <Logout />

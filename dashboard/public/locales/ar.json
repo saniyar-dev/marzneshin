@@ -363,6 +363,20 @@
           }
         }
       }
+    },
+    "branding": {
+      "title": "Branding",
+      "description": "Customize the appearance of your subscription page. These settings apply to all users under your account.",
+      "shop-name": "Shop Name",
+      "shop-name-placeholder": "Saniyar VPN",
+      "support-url": "Support URL",
+      "logo": "Logo",
+      "upload": "Upload Logo",
+      "replace": "Replace Logo",
+      "uploading": "Uploading...",
+      "remove": "Remove",
+      "no-logo": "No logo uploaded yet",
+      "logo-hint": "Allowed formats: {{exts}}. Max 1 MB."
     }
   },
   "events": {
@@ -432,5 +446,6 @@
     "unhealthy": "غير سليم",
     "limited": "محدود",
     "error": "خطأ"
-  }
+  },
+  "branding": "Branding"
 }

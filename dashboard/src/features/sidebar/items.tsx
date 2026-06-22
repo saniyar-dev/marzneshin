@@ -1,5 +1,5 @@
 import { SidebarObject } from '@marzneshin/common/components';
-import { Box, Home, ShieldCheck, Server, ServerCog, Settings, UsersIcon } from 'lucide-react';
+import { Box, Home, Paintbrush, ShieldCheck, Server, ServerCog, Settings, UsersIcon } from 'lucide-react';
 
 export const sidebarItems: SidebarObject = {
     Dashboard: [
@@ -49,6 +49,12 @@ export const sidebarItems: SidebarObject = {
             icon: <Settings />,
             isParent: false,
         },
+        {
+            title: 'Branding',
+            to: '/branding',
+            icon: <Paintbrush />,
+            isParent: false,
+        },
     ]
 };
 
@@ -66,6 +72,14 @@ export const sidebarItemsNonSudoAdmin: SidebarObject = {
             title: 'Users',
             to: '/users',
             icon: <UsersIcon />,
+            isParent: false,
+        },
+    ],
+    System: [
+        {
+            title: 'Branding',
+            to: '/branding',
+            icon: <Paintbrush />,
             isParent: false,
         },
     ],

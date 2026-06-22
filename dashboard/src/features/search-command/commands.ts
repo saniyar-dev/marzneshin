@@ -6,6 +6,7 @@ import {
     SettingsIcon,
     LucideIcon,
     ShieldIcon,
+    PaintbrushIcon,
 } from "lucide-react";
 
 export interface CommandItemConfig {
@@ -93,6 +94,12 @@ export const commandItems: CommandGroupConfig[] = [
                 label: "settings",
                 path: "/settings",
                 sudo: true,
+            },
+            {
+                icon: PaintbrushIcon,
+                label: "branding",
+                path: "/branding",
+                sudo: false,
             },
         ],
     },

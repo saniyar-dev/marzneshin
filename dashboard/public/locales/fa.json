@@ -262,6 +262,20 @@
       "sudo-privilage": "دسترسی سوپر ادمین",
       "all-services-access": "دسترسی به کلیه سرویس ها",
       "users-data-usage": "مصرف کاربران"
+    },
+    "branding": {
+      "title": "Branding",
+      "description": "Customize the appearance of your subscription page. These settings apply to all users under your account.",
+      "shop-name": "Shop Name",
+      "shop-name-placeholder": "Saniyar VPN",
+      "support-url": "Support URL",
+      "logo": "Logo",
+      "upload": "Upload Logo",
+      "replace": "Replace Logo",
+      "uploading": "Uploading...",
+      "remove": "Remove",
+      "no-logo": "No logo uploaded yet",
+      "logo-hint": "Allowed formats: {{exts}}. Max 1 MB."
     }
   },
   "events": {
@@ -323,5 +337,6 @@
     "unhealthy": "ناسالم",
     "limited": "محدود شده",
     "error": "خطا"
-  }
+  },
+  "branding": "Branding"
 }
