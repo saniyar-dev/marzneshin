@@ -23,7 +23,11 @@ from app.db.models import (
     Backend,
     HostChain,
 )
-from app.models.admin import AdminCreate, AdminPartialModify
+from app.models.admin import (
+    AdminBrandingModify,
+    AdminCreate,
+    AdminPartialModify,
+)
 from app.models.node import (
     NodeCreate,
     NodeModify,
@@ -835,6 +839,21 @@ def partial_update_admin(
         dbadmin.hashed_password = modified_admin.hashed_password
         dbadmin.password_reset_at = datetime.utcnow()
 
+    db.commit()
+    db.refresh(dbadmin)
+    return dbadmin
+
+
+def set_admin_branding(
+    db: Session, dbadmin: Admin, branding: AdminBrandingModify
+):
+    fields_set = branding.model_fields_set
+    if "brand_shop_name" in fields_set:
+        dbadmin.brand_shop_name = branding.brand_shop_name
+    if "brand_logo_filename" in fields_set:
+        dbadmin.brand_logo_filename = branding.brand_logo_filename
+    if "brand_support_url" in fields_set:
+        dbadmin.brand_support_url = branding.brand_support_url
     db.commit()
     db.refresh(dbadmin)
     return dbadmin

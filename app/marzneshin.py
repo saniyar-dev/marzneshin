@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
@@ -22,6 +23,8 @@ from app.config.env import (
     UVICORN_SSL_KEYFILE,
     UVICORN_UDS,
     DASHBOARD_PATH,
+    BRAND_LOGOS_DIRECTORY,
+    BRAND_LOGOS_URL_PREFIX,
     TASKS_RECORD_USER_USAGES_INTERVAL,
     TASKS_REVIEW_USERS_INTERVAL,
     TASKS_EXPIRE_DAYS_REACHED_INTERVAL,
@@ -120,6 +123,13 @@ def validation_exception_handler(
 
 
 async def main():
+    os.makedirs(BRAND_LOGOS_DIRECTORY, exist_ok=True)
+    app.mount(
+        BRAND_LOGOS_URL_PREFIX,
+        StaticFiles(directory=BRAND_LOGOS_DIRECTORY),
+        name="brand-logos",
+    )
+
     if not DEBUG:
         app.mount(
             DASHBOARD_PATH,

@@ -119,3 +119,14 @@ TASKS_EXPIRE_DAYS_REACHED_INTERVAL = config(
 TASKS_RESET_USER_DATA_USAGE = config(
     "TASKS_RESET_USER_DATA_USAGE", default=3600, cast=int
 )
+
+# Per-admin branding on subscription pages
+BRAND_LOGOS_DIRECTORY = config(
+    "BRAND_LOGOS_DIRECTORY", default="./brand-logos/"
+)
+BRAND_LOGOS_URL_PREFIX = config(
+    "BRAND_LOGOS_URL_PREFIX", default="/brand-logos/"
+)
+BRAND_LOGO_MAX_BYTES = config(
+    "BRAND_LOGO_MAX_BYTES", default=1_048_576, cast=int
+)

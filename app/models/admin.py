@@ -1,6 +1,6 @@
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-from pydantic import ConfigDict, BaseModel
+from pydantic import ConfigDict, BaseModel, Field
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(
@@ -23,6 +23,16 @@ class Admin(BaseModel):
     modify_users_access: bool = True
     service_ids: list = []
     subscription_url_prefix: str = ""
+    brand_shop_name: str | None = None
+    brand_logo_filename: str | None = None
+    brand_support_url: str | None = None
+    model_config = ConfigDict(from_attributes=True)
+
+
+class AdminBrandingModify(BaseModel):
+    brand_shop_name: str | None = Field(None, max_length=64)
+    brand_logo_filename: str | None = Field(None, max_length=64)
+    brand_support_url: str | None = Field(None, max_length=512)
     model_config = ConfigDict(from_attributes=True)
 
 

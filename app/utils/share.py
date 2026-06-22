@@ -32,6 +32,7 @@ from app.config.env import (
     SINGBOX_SUBSCRIPTION_TEMPLATE,
     CLASH_SUBSCRIPTION_TEMPLATE,
     SUBSCRIPTION_PAGE_TEMPLATE,
+    BRAND_LOGOS_URL_PREFIX,
 )
 from app.db import GetDB
 from app.db.crud import get_hosts_for_user
@@ -85,9 +86,31 @@ def generate_subscription_template(
         placeholder_remark=subscription_settings.placeholder_remark,
         shuffle=subscription_settings.shuffle_configs,
     ).split()
+
+    admin = db_user.admin
+    brand_shop_name = (
+        admin.brand_shop_name if admin else None
+    ) or subscription_settings.profile_title
+    brand_logo_url = (
+        f"{BRAND_LOGOS_URL_PREFIX}{admin.brand_logo_filename}"
+        if admin and admin.brand_logo_filename
+        else None
+    )
+    brand_support_url = (
+        admin.brand_support_url if admin else None
+    ) or subscription_settings.support_link
+
     return render_template(
         SUBSCRIPTION_PAGE_TEMPLATE,
-        {"user": UserResponse.model_validate(db_user), "links": links},
+        {
+            "user": UserResponse.model_validate(db_user),
+            "links": links,
+            "brand": {
+                "shop_name": brand_shop_name,
+                "logo_url": brand_logo_url,
+                "support_url": brand_support_url,
+            },
+        },
     )
 
 

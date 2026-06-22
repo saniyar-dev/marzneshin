@@ -109,6 +109,9 @@ class Admin(Base):
         default="",
         server_default=sqlalchemy.sql.text(""),
     )
+    brand_shop_name = Column(String(64), nullable=True)
+    brand_logo_filename = Column(String(64), nullable=True)
+    brand_support_url = Column(String(512), nullable=True)
 
     @property
     def service_ids(self):

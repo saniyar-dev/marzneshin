@@ -58,11 +58,50 @@
             margin-bottom: 5px;
             margin-right: -15px;
         }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .brand-logo {
+            max-height: 48px;
+            max-width: 160px;
+        }
+
+        .brand-name {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .brand-support {
+            margin: 0 0 16px 0;
+            font-size: 14px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 
 <body>
+{% if brand.shop_name or brand.logo_url %}
+<header class="brand-header">
+    {% if brand.logo_url %}
+    <img src="{{ brand.logo_url }}" alt="{{ brand.shop_name or 'Brand' }}" class="brand-logo">
+    {% endif %}
+    {% if brand.shop_name %}
+    <h1 class="brand-name">{{ brand.shop_name }}</h1>
+    {% endif %}
+</header>
+{% endif %}
+
+{% if brand.support_url %}
+<p class="brand-support">Need help? <a href="{{ brand.support_url }}" target="_blank" rel="noopener">Contact support</a></p>
+{% endif %}
+
 <h1>User Information</h1>
 <p>Username: {{ user.username }} <span class="status {% if user.is_active %}active{% else %}inactive{% endif %}">{{
     "Active" if user.is_active else "Inactive"}}</span></p>

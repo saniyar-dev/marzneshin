@@ -1,18 +1,26 @@
 from typing import Optional, Annotated
+import os
+import secrets
 
 import sqlalchemy
 from fastapi import APIRouter
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, UploadFile, status
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_pagination import Page
 from fastapi_pagination.ext.sqlalchemy import paginate
 
+from app.config.env import (
+    BRAND_LOGOS_DIRECTORY,
+    BRAND_LOGOS_URL_PREFIX,
+    BRAND_LOGO_MAX_BYTES,
+)
 from app.db import Session, crud
 from app.db.models import Admin as DBAdmin, Service, User
 from app.dependencies import AdminDep, SudoAdminDep, DBDep
 from app.marznode.operations import update_user
 from app.models.admin import (
     Admin,
+    AdminBrandingModify,
     AdminCreate,
     AdminInDB,
     Token,
@@ -24,6 +32,15 @@ from app.models.user import UserResponse
 from app.utils.auth import create_admin_token
 
 router = APIRouter(tags=["Admin"], prefix="/admins")
+
+
+ALLOWED_LOGO_TYPES = {
+    "image/png",
+    "image/jpeg",
+    "image/webp",
+    "image/svg+xml",
+}
+ALLOWED_LOGO_EXTS = {"png", "jpg", "jpeg", "webp", "svg"}
 
 
 def authenticate_admin(
@@ -62,6 +79,51 @@ def create_admin(new_admin: AdminCreate, db: DBDep, admin: SudoAdminDep):
 @router.get("/current", response_model=Admin)
 def get_current_admin(admin: AdminDep):
     return admin
+
+
+@router.put("/current/branding", response_model=AdminResponse)
+def update_own_branding(
+    branding: AdminBrandingModify, db: DBDep, admin: AdminDep
+):
+    dbadmin = crud.get_admin(db, admin.username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    return crud.set_admin_branding(db, dbadmin, branding)
+
+
+@router.post("/current/logo")
+async def upload_own_logo(file: UploadFile, db: DBDep, admin: AdminDep):
+    if file.content_type not in ALLOWED_LOGO_TYPES:
+        raise HTTPException(status_code=415, detail="Unsupported image type")
+
+    original = file.filename or ""
+    ext = original.rsplit(".", 1)[-1].lower() if "." in original else ""
+    if ext not in ALLOWED_LOGO_EXTS:
+        raise HTTPException(
+            status_code=415, detail="Unsupported file extension"
+        )
+
+    dbadmin = crud.get_admin(db, admin.username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+
+    body = await file.read()
+    if len(body) > BRAND_LOGO_MAX_BYTES:
+        raise HTTPException(status_code=413, detail="Logo too large")
+
+    os.makedirs(BRAND_LOGOS_DIRECTORY, exist_ok=True)
+    filename = f"{dbadmin.id}_{secrets.token_hex(8)}.{ext}"
+    with open(os.path.join(BRAND_LOGOS_DIRECTORY, filename), "wb") as f:
+        f.write(body)
+
+    crud.set_admin_branding(
+        db, dbadmin, AdminBrandingModify(brand_logo_filename=filename)
+    )
+
+    return {
+        "filename": filename,
+        "url": f"{BRAND_LOGOS_URL_PREFIX}{filename}",
+    }
 
 
 @router.post("/token", response_model=Token)
@@ -149,7 +211,11 @@ def get_admin_users(username: str, db: DBDep, admin: SudoAdminDep):
     if not db_admin:
         raise HTTPException(status_code=404, detail="Admin not found")
 
-    query = db.query(User).where(User.admin_id == db_admin.id).filter(User.username.isnot(None))
+    query = (
+        db.query(User)
+        .where(User.admin_id == db_admin.id)
+        .filter(User.username.isnot(None))
+    )
 
     return paginate(query)
 
