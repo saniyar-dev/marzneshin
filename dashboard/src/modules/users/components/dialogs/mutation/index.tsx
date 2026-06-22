@@ -36,8 +36,8 @@ export const UsersMutationDialog: FC<MutationDialogProps<UserMutationType>> = ({
             data_limit_reset_strategy: "no_reset",
             data_limit: undefined,
             note: "",
-            expire_date: "",
-            expire_strategy: "fixed_date",
+            expire_date: null,
+            expire_strategy: "never",
         }),
         [],
     );

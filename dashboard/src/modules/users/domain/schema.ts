@@ -2,7 +2,13 @@ import { z } from "zod";
 import { DATA_LIMIT_METRIC } from "@marzneshin/modules/users";
 
 export const UserSchema = z.object({
-    username: z.string().min(1, { message: "Username is required" }),
+    username: z
+        .string()
+        .min(3, { message: "Username must be at least 3 characters" })
+        .max(32, { message: "Username must be at most 32 characters" })
+        .regex(/^[\w-]+$/, {
+            message: "Username can only contain a-z, 0-9, underscores, and hyphens",
+        }),
     note: z.string().nullable(),
     data_limit: z
         .union([z.string().transform((str) => Number(str)), z.number()])

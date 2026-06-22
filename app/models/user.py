@@ -1,13 +1,14 @@
 import secrets
 from datetime import datetime
 from enum import StrEnum
-from typing import Annotated
+from typing import Annotated, Any
 
 from pydantic import (
     ConfigDict,
     BaseModel,
     Field,
     StringConstraints,
+    field_validator,
     model_validator,
 )
 
@@ -31,6 +32,11 @@ class UserExpireStrategy(StrEnum):
     NEVER = "never"
     FIXED_DATE = "fixed_date"
     START_ON_FIRST_USE = "start_on_first_use"
+
+
+def _empty_str_to_none(v: Any) -> Any:
+    """Treat empty string as None so Pydantic doesn't reject it as a bad datetime."""
+    return None if isinstance(v, str) and v.strip() == "" else v
 
 
 class User(BaseModel):
@@ -64,6 +70,19 @@ class User(BaseModel):
     online_at: datetime | None = Field(None)
 
     model_config = ConfigDict(from_attributes=True)
+
+    _empty_str_to_none_expire = field_validator("expire_date", mode="before")(
+        _empty_str_to_none
+    )
+    _empty_str_to_none_deadline = field_validator(
+        "activation_deadline", mode="before"
+    )(_empty_str_to_none)
+    _empty_str_to_none_sub_updated = field_validator(
+        "sub_updated_at", mode="before"
+    )(_empty_str_to_none)
+    _empty_str_to_none_online = field_validator("online_at", mode="before")(
+        _empty_str_to_none
+    )
 
     @model_validator(mode="after")
     def validate_expiry(self):

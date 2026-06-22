@@ -10,7 +10,7 @@ export const useExpirationMethodTabs = (entity: UserMutationType | null) => {
     const [
         selectedExpirationMethodTab,
         setSelectedExpirationMethodTab
-    ] = useState<ExpireStrategy>(entity ? entity.expire_strategy : 'fixed_date');
+    ] = useState<ExpireStrategy>(entity ? entity.expire_strategy : 'never');
     useEffect(() => {
         strategies[selectedExpirationMethodTab as ExpireStrategy].apply(form);
         // eslint-disable-next-line react-hooks/exhaustive-deps
