@@ -1,23 +1,42 @@
 services:
-  marzneshin:
-    image: dawsh/marzneshin:latest
-    restart: always
-    env_file: .env
-    network_mode: host
-    volumes:
-      - /var/lib/marzneshin:/var/lib/marzneshin
-
-  marznode:
-    image: dawsh/marznode:latest
-    restart: always
-    network_mode: host
-    environment:
-      SERVICE_ADDRESS: "127.0.0.1"
-      INSECURE: "True"
-      XRAY_EXECUTABLE_PATH: "/usr/local/bin/xray"
-      XRAY_ASSETS_PATH: "/usr/local/lib/xray"
-      XRAY_CONFIG_PATH: "/var/lib/marznode/xray_config.json"
-      SSL_KEY_FILE: "./server.key"
-      SSL_CERT_FILE: "./server.cert"
-    volumes:
-      - /var/lib/marznode:/var/lib/marznode
+    marzneshin:
+        image: dawsh/marzneshin:latest
+        restart: always
+        env_file: .env
+        environment:
+            SQLALCHEMY_DATABASE_URL: "mariadb+pymysql://root:password@127.0.0.1:3307/marzneshin"
+        network_mode: host
+        volumes:
+            - /var/lib/marzneshin:/var/lib/marzneshin
+            - /home/saniyar/migration/app/importer/docker/v070/user.py:/app/app/models/user.py
+            - /home/saniyar/migration/app/importer/docker/v070/crud.py:/app/app/db/crud.py
+        depends_on:
+            db:
+                condition: service_healthy
+                required: true
+    marznode:
+        image: dawsh/marznode:latest
+        restart: always
+        network_mode: host
+        environment:
+            SERVICE_ADDRESS: "127.0.0.1"
+            INSECURE: "True"
+            XRAY_EXECUTABLE_PATH: "/usr/local/bin/xray"
+            XRAY_ASSETS_PATH: "/usr/local/lib/xray"
+            XRAY_CONFIG_PATH: "/var/lib/marznode/xray_config.json"
+        volumes:
+            - /var/lib/marznode:/var/lib/marznode
+    db:
+        image: mariadb:latest
+        restart: always
+        environment:
+            MARIADB_ROOT_PASSWORD: password
+            MARIADB_DATABASE: marzneshin
+        volumes:
+            - /var/lib/marzneshin/mysql:/var/lib/mysql
+        ports:
+            - "127.0.0.1:3307:3306"
+        healthcheck:
+            test: healthcheck.sh --connect
+            interval: 5s
+            retries: 4
