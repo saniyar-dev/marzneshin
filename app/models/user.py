@@ -58,6 +58,7 @@ class User(BaseModel):
     ) = (None,)
     activation_deadline: datetime | None = Field(None)
     key: str = Field(default_factory=lambda: secrets.token_hex(16))
+    sub_token: str | None = Field(None)
     data_limit: int | None = Field(
         ge=0, default=None, description="data_limit can be 0 or greater"
     )

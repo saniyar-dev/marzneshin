@@ -156,6 +156,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(32), unique=True, index=True)
     key = Column(String(64), unique=True)
+    sub_token = Column(String(128), unique=True, nullable=True, index=True)
     activated = Column(Boolean, nullable=False, default=True)
     enabled = Column(
         Boolean,
@@ -273,10 +274,10 @@ class User(Base):
         prefix = (
             self.admin.subscription_url_prefix if self.admin else None
         ) or SUBSCRIPTION_URL_PREFIX
-        return (
-            prefix.replace("*", secrets.token_hex(8))
-            + f"/sub/{self.username}/{self.key}"
-        )
+        base = prefix.replace("*", secrets.token_hex(8))
+        if self.sub_token:
+            return f"{base}/sub/{self.sub_token}"
+        return f"{base}/sub/{self.username}/{self.key}"
 
     @hybrid_property
     def owner_username(self):

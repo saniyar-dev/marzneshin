@@ -348,6 +348,10 @@ def get_user_by_id(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
 
 
+def get_user_by_sub_token(db: Session, sub_token: str):
+    return db.query(User).filter(User.sub_token == sub_token).first()
+
+
 UsersSortingOptions = Enum(
     "UsersSortingOptions",
     {
@@ -627,6 +631,7 @@ def create_user(
     dbuser = User(
         username=user.username,
         key=user.key,
+        sub_token=user.sub_token,
         expire_strategy=user.expire_strategy,
         expire_date=user.expire_date,
         usage_duration=user.usage_duration,
@@ -722,6 +727,7 @@ def reset_user_data_usage(db: Session, dbuser: User):
 
 def revoke_user_sub(db: Session, dbuser: User):
     dbuser.key = secrets.token_hex(16)
+    dbuser.sub_token = None
     dbuser.sub_revoked_at = datetime.utcnow()
     db.commit()
     db.refresh(dbuser)

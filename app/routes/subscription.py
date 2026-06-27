@@ -6,7 +6,7 @@ from fastapi import Header, HTTPException, Path, Request, Response
 from starlette.responses import HTMLResponse
 
 from app.db import crud
-from app.db.models import Settings
+from app.db.models import Settings, User
 from app.dependencies import DBDep, SubUserDep, StartDateDep, EndDateDep
 from app.models.settings import SubscriptionSettings
 from app.models.system import TrafficUsageSeries
@@ -48,17 +48,7 @@ def get_subscription_user_info(user: UserResponse) -> dict:
     }
 
 
-@router.get("/{username}/{key}")
-def user_subscription(
-    db_user: SubUserDep,
-    request: Request,
-    db: DBDep,
-    user_agent: str = Header(default=""),
-):
-    """
-    Subscription link, result format depends on subscription settings
-    """
-
+def _render_subscription(db_user: User, db, request: Request, user_agent: str):
     user: UserResponse = UserResponse.model_validate(db_user)
 
     crud.update_user_sub(db, db_user, user_agent)
@@ -120,6 +110,58 @@ def user_subscription(
             )
 
 
+def _render_subscription_with_client_type(
+    db_user: User, db, request: Request, client_type: str
+):
+    user: UserResponse = UserResponse.model_validate(db_user)
+
+    subscription_settings = SubscriptionSettings.model_validate(
+        db.query(Settings.subscription).first()[0]
+    )
+
+    response_headers = {
+        "content-disposition": f'attachment; filename="{user.username}"',
+        "profile-web-page-url": str(request.url),
+        "support-url": subscription_settings.support_link,
+        "profile-title": encode_title(subscription_settings.profile_title),
+        "profile-update-interval": str(subscription_settings.update_interval),
+        "subscription-userinfo": "; ".join(
+            f"{key}={val}"
+            for key, val in get_subscription_user_info(user).items()
+        ),
+    }
+
+    conf = generate_subscription(
+        user=db_user,
+        config_format="links" if client_type == "v2ray" else client_type,
+        as_base64=client_type == "v2ray",
+        use_placeholder=not user.is_active
+        and subscription_settings.placeholder_if_disabled,
+        placeholder_remark=subscription_settings.placeholder_remark,
+        shuffle=subscription_settings.shuffle_configs,
+    )
+    return Response(
+        content=conf,
+        media_type=client_type_mime_type[client_type],
+        headers=response_headers,
+    )
+
+
+# Legacy {username}/{key} routes — must be declared BEFORE {token}
+# so FastAPI matches the two-segment pattern first.
+@router.get("/{username}/{key}")
+def user_subscription(
+    db_user: SubUserDep,
+    request: Request,
+    db: DBDep,
+    user_agent: str = Header(default=""),
+):
+    """
+    Subscription link, result format depends on subscription settings
+    """
+    return _render_subscription(db_user, db, request, user_agent)
+
+
 @router.get("/{username}/{key}/info", response_model=UserResponse)
 def user_subscription_info(db_user: SubUserDep):
     return db_user
@@ -161,36 +203,70 @@ def user_subscription_with_client_type(
     """
     Subscription by client type; v2ray, xray, sing-box, clash and clash-meta formats supported
     """
-
-    user: UserResponse = UserResponse.model_validate(db_user)
-
-    subscription_settings = SubscriptionSettings.model_validate(
-        db.query(Settings.subscription).first()[0]
+    return _render_subscription_with_client_type(
+        db_user, db, request, client_type
     )
 
-    response_headers = {
-        "content-disposition": f'attachment; filename="{user.username}"',
-        "profile-web-page-url": str(request.url),
-        "support-url": subscription_settings.support_link,
-        "profile-title": encode_title(subscription_settings.profile_title),
-        "profile-update-interval": str(subscription_settings.update_interval),
-        "subscription-userinfo": "; ".join(
-            f"{key}={val}"
-            for key, val in get_subscription_user_info(user).items()
-        ),
-    }
 
-    conf = generate_subscription(
-        user=db_user,
-        config_format="links" if client_type == "v2ray" else client_type,
-        as_base64=client_type == "v2ray",
-        use_placeholder=not user.is_active
-        and subscription_settings.placeholder_if_disabled,
-        placeholder_remark=subscription_settings.placeholder_remark,
-        shuffle=subscription_settings.shuffle_configs,
+# Token-based routes — single path segment after /sub/.
+# Compatible with Marzban-style subscription URLs.
+def _resolve_user_by_token(token: str, db) -> User | None:
+    return crud.get_user_by_sub_token(db, token)
+
+
+@router.get("/{token}")
+def user_subscription_by_token(
+    token: str,
+    request: Request,
+    db: DBDep,
+    user_agent: str = Header(default=""),
+):
+    """
+    Marzban-compatible subscription link. Resolves user by opaque
+    `sub_token` instead of `{username}/{key}`.
+    """
+    db_user = _resolve_user_by_token(token, db)
+    if not db_user:
+        raise HTTPException(404)
+    return _render_subscription(db_user, db, request, user_agent)
+
+
+@router.get("/{token}/info", response_model=UserResponse)
+def user_subscription_by_token_info(token: str, db: DBDep):
+    db_user = _resolve_user_by_token(token, db)
+    if not db_user:
+        raise HTTPException(404)
+    return db_user
+
+
+@router.get("/{token}/usage", response_model=TrafficUsageSeries)
+def user_subscription_by_token_usage(
+    token: str,
+    db: DBDep,
+    start_date: StartDateDep,
+    end_date: EndDateDep,
+):
+    db_user = _resolve_user_by_token(token, db)
+    if not db_user:
+        raise HTTPException(404)
+    per_day = (end_date - start_date).total_seconds() > 3 * 86400
+    return crud.get_user_total_usage(
+        db, db_user, start_date, end_date, per_day=per_day
     )
-    return Response(
-        content=conf,
-        media_type=client_type_mime_type[client_type],
-        headers=response_headers,
+
+
+@router.get("/{token}/{client_type}")
+def user_subscription_by_token_with_client_type(
+    token: str,
+    request: Request,
+    db: DBDep,
+    client_type: str = Path(
+        regex="^(sing-box|clash-meta|clash|xray|v2ray|links|wireguard)$"
+    ),
+):
+    db_user = _resolve_user_by_token(token, db)
+    if not db_user:
+        raise HTTPException(404)
+    return _render_subscription_with_client_type(
+        db_user, db, request, client_type
     )
