@@ -1,11 +1,11 @@
-import { HostType } from "@marzneshin/modules/hosts";
+import { HostType } from "@fishy/modules/hosts";
 import { useQuery } from "@tanstack/react-query";
-import { fetch } from "@marzneshin/common/utils";
+import { fetch } from "@fishy/common/utils";
 import {
     FetchEntityReturn,
     UseEntityQueryProps,
     EntitySidebarQueryKeyType
-} from "@marzneshin/libs/entity-table/hooks";
+} from "@fishy/libs/entity-table/hooks";
 
 export async function fetchHosts({ queryKey }: EntitySidebarQueryKeyType): FetchEntityReturn<HostType> {
     const pagination = queryKey[3];

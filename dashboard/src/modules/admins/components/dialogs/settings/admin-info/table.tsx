@@ -7,7 +7,7 @@ import {
     Table,
     TableBody,
     TableRowWithCell,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { FC, useCallback } from "react";
 import {
     type AdminProp,
@@ -15,7 +15,7 @@ import {
     AdminPermissionPill,
     useAdminUsersStatusDisable,
     useAdminUsersStatusEnable
-} from "@marzneshin/modules/admins";
+} from "@fishy/modules/admins";
 import { useTranslation } from "react-i18next";
 import { LoaderIcon, UserCheck, UserX } from "lucide-react";
 import { format } from '@chbphone55/pretty-bytes';

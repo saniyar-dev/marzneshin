@@ -1,13 +1,13 @@
 services:
-    marzneshin:
-        image: dawsh/marzneshin:latest
+    fishy:
+        image: dawsh/fishy:latest
         restart: always
         env_file: .env
         environment:
-            SQLALCHEMY_DATABASE_URL: "mariadb+pymysql://root:password@127.0.0.1:3307/marzneshin"
+            SQLALCHEMY_DATABASE_URL: "mariadb+pymysql://root:password@127.0.0.1:3307/fishy"
         network_mode: host
         volumes:
-            - /var/lib/marzneshin:/var/lib/marzneshin
+            - /var/lib/fishy:/var/lib/fishy
         depends_on:
             db:
                 condition: service_healthy
@@ -31,9 +31,9 @@ services:
         restart: always
         environment:
             MARIADB_ROOT_PASSWORD: password
-            MARIADB_DATABASE: marzneshin
+            MARIADB_DATABASE: fishy
         volumes:
-            - /var/lib/marzneshin/mysql:/var/lib/mysql
+            - /var/lib/fishy/mysql:/var/lib/mysql
         ports:
             - "127.0.0.1:3307:3306"
         healthcheck:

@@ -7,7 +7,7 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle
-} from '@marzneshin/common/components'
+} from '@fishy/common/components'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 

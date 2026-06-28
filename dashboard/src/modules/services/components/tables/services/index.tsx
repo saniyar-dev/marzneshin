@@ -3,9 +3,9 @@ import {
     ServicesQueryFetchKey,
     fetchServices,
     ServiceType
-} from "@marzneshin/modules/services";
+} from "@fishy/modules/services";
 import { columns as columnsFn } from "./columns";
-import { EntityTable } from "@marzneshin/libs/entity-table";
+import { EntityTable } from "@fishy/libs/entity-table";
 import { useNavigate } from "@tanstack/react-router";
 
 export const ServicesTable: FC = () => {

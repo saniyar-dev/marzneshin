@@ -5,8 +5,8 @@ import {
 import {
     useRouterServiceContext,
     ServiceSettingsDialog,
-} from "@marzneshin/modules/services";
-import { useDialog } from "@marzneshin/common/hooks";
+} from "@fishy/modules/services";
+import { useDialog } from "@fishy/common/hooks";
 
 const ServiceOpen = () => {
     const [settingsDialogOpen, setSettingsDialogOpen] = useDialog(true);

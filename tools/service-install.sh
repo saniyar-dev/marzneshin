@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SERVICE_NAME="marzneshin"
-SERVICE_DESCRIPTION="Marzneshin Service"
-SERVICE_DOCUMENTATION="https://docs.marzneshin.org"
+SERVICE_NAME="fishy"
+SERVICE_DESCRIPTION="Fishy Service"
+SERVICE_DOCUMENTATION="https://docs.fishy.com"
 MAIN_PY_PATH="$PWD/main.py"
 SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 

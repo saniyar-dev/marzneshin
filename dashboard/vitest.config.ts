@@ -15,7 +15,7 @@ export default defineConfig({
     resolve: {
         alias: [
             {
-                find: '@marzneshin',
+                find: '@fishy',
                 replacement: path.resolve(__dirname, './src/'),
             },
         ],

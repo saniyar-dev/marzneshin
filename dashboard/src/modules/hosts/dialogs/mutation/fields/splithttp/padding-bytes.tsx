@@ -4,7 +4,7 @@ import {
     FormItem,
     FormLabel,
     Input,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { useTranslation } from "react-i18next";
 
 

@@ -7,13 +7,13 @@ import {
 import {
     RouterServiceContext,
     fetchService,
-} from "@marzneshin/modules/services";
+} from "@fishy/modules/services";
 import { Suspense } from "react";
 import {
     AlertDialog,
     AlertDialogContent,
     Loading
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 
 const ServiceProvider = () => {
     const { service } = Route.useLoaderData()

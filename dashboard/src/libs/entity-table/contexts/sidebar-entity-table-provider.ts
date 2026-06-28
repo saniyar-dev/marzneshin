@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 import {
     type SidebarEntityCardSectionsProps
-} from "@marzneshin/libs/entity-table/components";
+} from "@fishy/libs/entity-table/components";
 
 interface SidebarEntityTableContextProps<SData> {
     sidebarEntityId?: string;

@@ -1,13 +1,13 @@
 
-import { Button } from "@marzneshin/common/components";
-import { SelectableEntityTable, useRowSelection } from "@marzneshin/libs/entity-table";
+import { Button } from "@fishy/common/components";
+import { SelectableEntityTable, useRowSelection } from "@fishy/libs/entity-table";
 import { columns } from "./columns";
 import {
     type UserType,
     useUsersUpdateMutation,
-} from "@marzneshin/modules/users";
+} from "@fishy/modules/users";
 import { useTranslation } from "react-i18next";
-import { fetchUserServices } from "@marzneshin/modules/services";
+import { fetchUserServices } from "@fishy/modules/services";
 import { useState, useCallback, FC } from "react";
 
 interface UserServicesTableProps {

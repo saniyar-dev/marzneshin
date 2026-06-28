@@ -1,5 +1,5 @@
-import { SectionWidget } from "@marzneshin/common/components";
-import { BrandingForm } from "@marzneshin/modules/settings/branding";
+import { SectionWidget } from "@fishy/common/components";
+import { BrandingForm } from "@fishy/modules/settings/branding";
 import { useTranslation } from "react-i18next";
 
 export const BrandingWidget = () => {

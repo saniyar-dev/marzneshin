@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { UserType } from "@marzneshin/modules/users";
+import { UserType } from "@fishy/modules/users";
 
 interface RouterUserContextProps {
     user: UserType | null;

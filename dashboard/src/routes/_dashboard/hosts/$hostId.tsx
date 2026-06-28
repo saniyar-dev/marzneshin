@@ -7,14 +7,14 @@ import {
 import {
     RouterHostContext,
     fetchHost,
-} from "@marzneshin/modules/hosts";
+} from "@fishy/modules/hosts";
 import { Suspense } from "react";
 import {
     AlertDialog,
     AlertDialogContent,
     AlertDialogTitle,
     Loading
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 
 const HostProvider = () => {
     const { host } = Route.useLoaderData()

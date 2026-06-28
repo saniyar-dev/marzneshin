@@ -1,7 +1,7 @@
-import { Page, Loading } from '@marzneshin/common/components'
-import { SudoRoute } from '@marzneshin/libs/sudo-routes'
+import { Page, Loading } from '@fishy/common/components'
+import { SudoRoute } from '@fishy/libs/sudo-routes'
 import { createLazyFileRoute, Outlet } from '@tanstack/react-router'
-import { AdminsTable } from '@marzneshin/modules/admins'
+import { AdminsTable } from '@fishy/modules/admins'
 import { type FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
 

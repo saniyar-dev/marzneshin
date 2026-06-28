@@ -1,4 +1,4 @@
-<h1 align="center"/>Marzneshin</h1>
+<h1 align="center"/>Fishy Service</h1>
 
 <p align="center">
     A Scalable and Comprehensive Proxy Engine management panel.
@@ -6,33 +6,33 @@
 
 <br/>
 <p align="center">
-    <a href="https://github.com/marzneshin/marzneshin/actions/workflows/dashboard-ci.yml">
-        <img src="https://github.com/marzneshin/marzneshin/actions/workflows/dashboard-ci.yml/badge.svg" />
+    <a href="https://github.com/fishy/fishy/actions/workflows/dashboard-ci.yml">
+        <img src="https://github.com/fishy/fishy/actions/workflows/dashboard-ci.yml/badge.svg" />
     </a>
-    <a href="https://github.com/marzneshin/marzneshin/actions/workflows/package.yml" target="_blank">
-        <img src="https://github.com/marzneshin/marzneshin/actions/workflows/package.yml/badge.svg" />
+    <a href="https://github.com/fishy/fishy/actions/workflows/package.yml" target="_blank">
+        <img src="https://github.com/fishy/fishy/actions/workflows/package.yml/badge.svg" />
     </a>
-    <a href="https://hub.docker.com/r/dawsh/marzneshin" target="_blank">
-        <img src="https://img.shields.io/docker/pulls/dawsh/marzneshin?style=flat-square&logo=docker" />
+    <a href="https://hub.docker.com/r/dawsh/fishy" target="_blank">
+        <img src="https://img.shields.io/docker/pulls/dawsh/fishy?style=flat-square&logo=docker" />
     </a>
     <br>
     <a href="#">
-        <img src="https://img.shields.io/github/license/marzneshin/marzneshin?style=flat-square" />
+        <img src="https://img.shields.io/github/license/fishy/fishy?style=flat-square" />
     </a>
-    <a href="https://t.me/marzneshins" target="_blank">
+    <a href="https://t.me/fishys" target="_blank">
         <img src="https://img.shields.io/badge/telegram-group-blue?style=flat-square&logo=telegram" />
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/twitter-commiunity-blue?style=flat-square&logo=twitter" />
     </a>
     <a href="#">
-        <img src="https://img.shields.io/github/stars/marzneshin/marzneshin?style=social" />
+        <img src="https://img.shields.io/github/stars/fishy/fishy?style=social" />
     </a>
 </p>
 
 <p align="center">
-  <a href="https://github.com/marzneshin/marzneshin" target="_blank" rel="noopener noreferrer" >
-    <img src="https://github.com/marzneshin/marzneshin/raw/master/docs/assets/Desktop-full.png" alt="screenshots" width="600" height="auto">
+  <a href="https://github.com/fishy/fishy" target="_blank" rel="noopener noreferrer" >
+    <img src="https://github.com/fishy/fishy/raw/master/docs/assets/Desktop-full.png" alt="screenshots" width="600" height="auto">
   </a>
 </p>
 
@@ -49,15 +49,15 @@
 
 # Overview
 
-Marzneshin is a censorship circumvention tool utilizing other censorship circumvention tools.
+Fishy Service is a censorship circumvention tool utilizing other censorship circumvention tools.
 
-Marzneshin controls the [Marznodes](https://github.com/marzneshin/marznode)
+Fishy Service controls the [Marznodes](https://github.com/marzneshin/marznode)
 connected to it; monitoring/disabling/enabling users on marznode instances while
 marznode manages and interacts with vpn backends (such as xray).
 
 ### Docs
 
-Marzneshin documentation may be found [here](https://docs.marzneshin.org).
+Fishy Service documentation may be found [here](https://docs.fishy.com).
 
 ### Features
 
@@ -73,8 +73,8 @@ Marzneshin documentation may be found [here](https://docs.marzneshin.org).
 - Automated **Share link** and **QRcode** generator
 - System, nodes, traffic statistics, users monitoring
 - Integrated **Command Line Interface (CLI)**
-- [**Multi-admin** support](https://github.com/marzneshin/marzneshin/issues/73) (WIP)
-- Marzneshin is decoupled from VPN backends
+- [**Multi-admin** support](https://github.com/fishy/fishy/issues/73) (WIP)
+- Fishy Service is decoupled from VPN backends
 - Resilient and fault tolerant node management
 
 **Deployment and Developer Kit:**
@@ -97,7 +97,7 @@ Marzneshin documentation may be found [here](https://docs.marzneshin.org).
 
 # Donation
 
-If you found Marzneshin useful and would like to support its development, you can make a donation in one of the
+If you found Fishy Service useful and would like to support its development, you can make a donation in one of the
 following crypto networks:
 
 - Bitcoin network: 13ZDhE5KHGsfjM4A22eLTUgW98WpXhQTuF
@@ -114,18 +114,18 @@ Published under [AGPL-3.0](./LICENSE).
 
 # Contributors
 
-We ❤️‍🔥 contributors! If you'd like to contribute, please check out our [Contributing Guidelines](https://docs.marzneshin.org/docs/contribution-guideline) and
+We ❤️‍🔥 contributors! If you'd like to contribute, please check out our [Contributing Guidelines](https://docs.fishy.com/docs/contribution-guideline) and
 feel free to submit a pull request or open an issue. We also welcome you to join
-our [Telegram](https://t.me/marzneshins) group for either support or contributing guidance.
+our [Telegram](https://t.me/fishys) group for either support or contributing guidance.
 
-Check [open issues](https://github.com/marzneshin/marzneshin/issues) to help the progress of this project.
+Check [open issues](https://github.com/fishy/fishy/issues) to help the progress of this project.
 
 <p align="center">
-Thanks to all contributors who have helped Marzneshin:
+Thanks to all contributors who have helped Fishy Service:
 </p>
 <p align="center">
-<a href="https://github.com/marzneshin/marzneshin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=marzneshin/marzneshin" />
+<a href="https://github.com/fishy/fishy/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fishy/fishy" />
 </a>
 </p>
 <p align="center">

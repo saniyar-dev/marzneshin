@@ -1,7 +1,7 @@
 import resolveConfig from "tailwindcss/resolveConfig";
 
 //@ts-expect-error
-import tailwindConfig from "@marzneshin/../tailwind.config.js";
+import tailwindConfig from "@fishy/../tailwind.config.js";
 import { useEffect, useState } from 'react';
 
 const fullConfig = resolveConfig(tailwindConfig);

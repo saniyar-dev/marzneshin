@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Badge, Label } from '@marzneshin/common/components';
-import { StatusType } from '@marzneshin/common/types';
+import { Badge, Label } from '@fishy/common/components';
+import { StatusType } from '@fishy/common/types';
 import { NodesStatus } from '..';
 
 interface NodesStatusBadgeProps {

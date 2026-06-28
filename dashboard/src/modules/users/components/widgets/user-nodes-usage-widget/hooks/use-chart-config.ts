@@ -1,8 +1,8 @@
 import {
     ChartConfig,
-} from "@marzneshin/common/components";
-import { UserNodeUsagesResponse } from "@marzneshin/modules/users";
-import { interpolateColors } from "@marzneshin/common/utils";
+} from "@fishy/common/components";
+import { UserNodeUsagesResponse } from "@fishy/modules/users";
+import { interpolateColors } from "@fishy/common/utils";
 import { interpolateRdBu } from "d3";
 
 export const useChartConfig = (nodesUsage: UserNodeUsagesResponse) => {

@@ -1,14 +1,14 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ServiceType } from "@marzneshin/modules/services";
+import { ServiceType } from "@fishy/modules/services";
 import {
     DataTableActionsCell,
     DataTableColumnHeader
-} from "@marzneshin/libs/entity-table"
-import i18n from "@marzneshin/features/i18n";
+} from "@fishy/libs/entity-table"
+import i18n from "@fishy/features/i18n";
 import {
     NoPropogationButton,
-} from "@marzneshin/common/components";
-import { ColumnActions } from "@marzneshin/libs/entity-table";
+} from "@fishy/common/components";
+import { ColumnActions } from "@fishy/libs/entity-table";
 
 export const columns = (actions: ColumnActions<ServiceType>): ColumnDef<ServiceType>[] => ([
     {

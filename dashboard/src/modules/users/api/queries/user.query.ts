@@ -1,6 +1,6 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { fetch } from "@marzneshin/common/utils";
-import type { UserType } from "@marzneshin/modules/users";
+import { fetch } from "@fishy/common/utils";
+import type { UserType } from "@fishy/modules/users";
 
 export async function fetchUser({
     queryKey,

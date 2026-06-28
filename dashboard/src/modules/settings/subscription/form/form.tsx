@@ -13,7 +13,7 @@ import {
     Separator,
     Awaiting,
     CheckboxField,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { Schema } from "./schema"
 import { Overlay } from "./overlay"
 import {
@@ -26,7 +26,7 @@ import { NoRulesAlert } from "./no-rules-alert";
 import {
     useSubscriptionSettingsQuery,
     useSubscriptionSettingsMutation,
-} from "@marzneshin/modules/settings/subscription";
+} from "@fishy/modules/settings/subscription";
 import { useEffect, useCallback } from "react";
 
 export function SubscriptionRulesForm() {

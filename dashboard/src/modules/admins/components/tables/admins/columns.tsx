@@ -3,18 +3,18 @@ import {
     type AdminType,
     AdminEnabledPill,
     AdminPermissionPill,
-} from "@marzneshin/modules/admins";
+} from "@fishy/modules/admins";
 import {
     DataTableActionsCell,
     DataTableColumnHeader
-} from "@marzneshin/libs/entity-table"
-import i18n from "@marzneshin/features/i18n";
+} from "@fishy/libs/entity-table"
+import i18n from "@fishy/features/i18n";
 import {
     NoPropogationButton,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import {
     type ColumnActions
-} from "@marzneshin/libs/entity-table";
+} from "@fishy/libs/entity-table";
 
 export const columns = (actions: ColumnActions<AdminType>): ColumnDef<AdminType, any>[] => [
     {

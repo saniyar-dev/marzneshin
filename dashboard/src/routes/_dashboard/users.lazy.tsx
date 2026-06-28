@@ -1,5 +1,5 @@
-import { Page, Loading } from '@marzneshin/common/components'
-import { UsersNoServiceAlert, UsersTable } from '@marzneshin/modules/users'
+import { Page, Loading } from '@fishy/common/components'
+import { UsersNoServiceAlert, UsersTable } from '@fishy/modules/users'
 import { createLazyFileRoute, Outlet } from '@tanstack/react-router'
 import { type FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'

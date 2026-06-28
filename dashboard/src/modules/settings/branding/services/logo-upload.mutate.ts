@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { fetch, queryClient } from "@marzneshin/common/utils";
+import { fetch, queryClient } from "@fishy/common/utils";
 import { toast } from "sonner";
-import i18n from "@marzneshin/features/i18n";
-import { currentAdminQueryKey } from "@marzneshin/modules/admins";
+import i18n from "@fishy/features/i18n";
+import { currentAdminQueryKey } from "@fishy/modules/admins";
 import type { LogoUploadResponse } from "../branding.type";
 
 export async function uploadLogo(file: File): Promise<LogoUploadResponse> {

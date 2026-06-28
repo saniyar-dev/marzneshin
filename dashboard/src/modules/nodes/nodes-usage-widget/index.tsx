@@ -7,17 +7,17 @@ import {
     ChartTooltip,
     ChartTooltipContent,
     ChartConfig,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { XAxis, BarChart, YAxis, CartesianGrid, Bar } from "recharts"
 import { format as formatByte } from '@chbphone55/pretty-bytes';
-import { useNodesUsageQuery, NodeType } from "@marzneshin/modules/nodes";
+import { useNodesUsageQuery, NodeType } from "@fishy/modules/nodes";
 import {
     useTransformDateUsageData,
     ChartDateInterval,
     SelectDateView,
     dateXAxisTicks,
     useFromNowInterval
-} from "@marzneshin/libs/stats-charts";
+} from "@fishy/libs/stats-charts";
 
 const chartConfig = {
     traffic: {

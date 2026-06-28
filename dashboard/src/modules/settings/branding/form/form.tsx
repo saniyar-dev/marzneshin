@@ -5,11 +5,11 @@ import {
     Button,
     Form,
     HStack,
-} from "@marzneshin/common/components";
-import { useCurrentAdminQuery } from "@marzneshin/modules/admins";
+} from "@fishy/common/components";
+import { useCurrentAdminQuery } from "@fishy/modules/admins";
 import {
     useBrandingMutation,
-} from "@marzneshin/modules/settings/branding";
+} from "@fishy/modules/settings/branding";
 import { useEffect } from "react";
 import { schema, Schema } from "./schema";
 import {

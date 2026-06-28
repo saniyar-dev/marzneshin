@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
         resolve: {
             alias: [
                 {
-                    find: '@marzneshin',
+                    find: '@fishy',
                     replacement: path.resolve(__dirname, './src/'),
                 },
             ],

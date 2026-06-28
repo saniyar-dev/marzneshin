@@ -1,4 +1,4 @@
-import { UserType } from "@marzneshin/modules/users";
+import { UserType } from "@fishy/modules/users";
 
 export interface NodesUsage {
     datetime: Date;

@@ -5,8 +5,8 @@ import {
 import {
     AdminsDeleteConfirmationDialog,
     useRouterAdminContext,
-} from "@marzneshin/modules/admins";
-import { useDialog } from "@marzneshin/common/hooks";
+} from "@fishy/modules/admins";
+import { useDialog } from "@fishy/common/hooks";
 
 const AdminDelete = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useDialog(true);

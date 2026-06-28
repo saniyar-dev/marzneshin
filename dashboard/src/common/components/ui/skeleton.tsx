@@ -1,4 +1,4 @@
-import { cn } from "@marzneshin/common/utils"
+import { cn } from "@fishy/common/utils"
 
 function Skeleton({
     className,

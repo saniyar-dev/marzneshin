@@ -79,7 +79,7 @@
   "weight": "Weight",
   "support-us": {
     "title": "Support Us",
-    "desc": "Marzneshin is free and open-source software (FOSS), join us and show your support by donating.",
+    "desc": "Fishy Service is free and open-source software (FOSS), join us and show your support by donating.",
     "donate": "Donate"
   },
   "page": {
@@ -329,7 +329,7 @@
         "statusEmoji": "User status as an emoji (✅,⌛,🪫,❌,🔌)",
         "proxyProtocol": "Proxy protocol (e.g. VMess)",
         "proxyMethod": "Proxy transport method (e.g. ws)",
-        "currentServer": "Marzneshin server ip address",
+        "currentServer": "Fishy Service server ip address",
         "security": "Security Layer",
         "host": "Request Host",
         "port": "Port",

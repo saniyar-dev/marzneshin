@@ -23,10 +23,10 @@ import {
     DropdownMenuTrigger,
     Button,
     SidebarObject,
-} from "@marzneshin/common/components"
-import { useScreenBreakpoint } from "@marzneshin/common/hooks";
-import { AppRouterPaths } from "@marzneshin/common/types";
-import i18n from "@marzneshin/features/i18n";
+} from "@fishy/common/components"
+import { useScreenBreakpoint } from "@fishy/common/hooks";
+import { AppRouterPaths } from "@fishy/common/types";
+import i18n from "@fishy/features/i18n";
 
 interface Dir {
     href: AppRouterPaths;

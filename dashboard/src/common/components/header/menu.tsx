@@ -7,16 +7,16 @@ import {
     DropdownMenuTrigger,
     DropdownMenuGroup,
     Button,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { Link } from "@tanstack/react-router";
 import { FC } from 'react';
 import { Settings, MenuIcon, Paintbrush, ShieldCheck } from "lucide-react";
-import { LanguageSwitchMenu } from "@marzneshin/features/language-switch";
-import { ThemeToggle } from "@marzneshin/features/theme-switch";
-import { useAuth, Logout } from "@marzneshin/modules/auth";
-import { useScreenBreakpoint } from "@marzneshin/common/hooks/use-screen-breakpoint";
+import { LanguageSwitchMenu } from "@fishy/features/language-switch";
+import { ThemeToggle } from "@fishy/features/theme-switch";
+import { useAuth, Logout } from "@fishy/modules/auth";
+import { useScreenBreakpoint } from "@fishy/common/hooks/use-screen-breakpoint";
 import { useTranslation } from "react-i18next";
-import { VersionIndicator } from "@marzneshin/features/version-indicator";
+import { VersionIndicator } from "@fishy/features/version-indicator";
 
 export const HeaderMenu: FC = () => {
 

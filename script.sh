@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e
 
-APP_NAME="marzneshin"
+APP_NAME="fishy"
 NODE_NAME="marznode"
 CONFIG_DIR="/etc/opt/$APP_NAME"
 DATA_DIR="/var/lib/$APP_NAME"
 NODE_DATA_DIR="/var/lib/$NODE_NAME"
 COMPOSE_FILE="$CONFIG_DIR/docker-compose.yml"
 
-FETCH_REPO="marzneshin/marzneshin"
+FETCH_REPO="fishy/fishy"
 SCRIPT_URL="https://github.com/$FETCH_REPO/raw/master/script.sh"
 
 colorized_echo() {
@@ -118,16 +118,16 @@ install_docker() {
     colorized_echo green "Docker installed successfully"
 }
 
-install_marzneshin_script() {
-    colorized_echo blue "Installing marzneshin script"
-    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzneshin
-    colorized_echo green "marzneshin script installed successfully"
+install_fishy_script() {
+    colorized_echo blue "Installing fishy script"
+    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/fishy
+    colorized_echo green "fishy script installed successfully"
 }
 
-install_marzneshin() {
+install_fishy() {
     # Fetch releases
-    FILES_URL_PREFIX="https://raw.githubusercontent.com/marzneshin/marzneshin/master"
-	COMPOSE_FILES_URL="https://raw.githubusercontent.com/marzneshin/marzneshin-deploy/master"
+    FILES_URL_PREFIX="https://raw.githubusercontent.com/fishy/fishy/master"
+	COMPOSE_FILES_URL="https://raw.githubusercontent.com/fishy/fishy-deploy/master"
  	database=$1
   	nightly=$2
   
@@ -139,41 +139,41 @@ install_marzneshin() {
     colorized_echo green "File saved in $CONFIG_DIR/docker-compose.yml"
 	if [ "$nightly" = true ]; then
 	    colorized_echo red "setting compose tag to nightly."
-	 	sed -ri "s/(dawsh\/marzneshin:)latest/\1nightly/g" $CONFIG_DIR/docker-compose.yml
+	 	sed -ri "s/(dawsh\/fishy:)latest/\1nightly/g" $CONFIG_DIR/docker-compose.yml
 	fi
  
     colorized_echo blue "Fetching example .env file"
     curl -sL "$FILES_URL_PREFIX/.env.example" -o "$CONFIG_DIR/.env"
     colorized_echo green "File saved in $CONFIG_DIR/.env"
 
-    colorized_echo green "Marzneshin files downloaded successfully"
+    colorized_echo green "Fishy Service files downloaded successfully"
 }
 
 install_marznode_xray_config() {
     mkdir -p "$NODE_DATA_DIR"
-    curl -sL "https://raw.githubusercontent.com/marzneshin/marznode/master/xray_config.json" -o "$NODE_DATA_DIR/xray_config.json"
+    curl -sL "https://raw.githubusercontent.com/fishy/marznode/master/xray_config.json" -o "$NODE_DATA_DIR/xray_config.json"
     colorized_echo green "Sample xray config downloaded for marznode"
 }
 
-uninstall_marzneshin_script() {
-    if [ -f "/usr/local/bin/marzneshin" ]; then
-        colorized_echo yellow "Removing marzneshin script"
-        rm "/usr/local/bin/marzneshin"
+uninstall_fishy_script() {
+    if [ -f "/usr/local/bin/fishy" ]; then
+        colorized_echo yellow "Removing fishy script"
+        rm "/usr/local/bin/fishy"
     fi
 }
 
-uninstall_marzneshin() {
+uninstall_fishy() {
     if [ -d "$CONFIG_DIR" ]; then
         colorized_echo yellow "Removing directory: $CONFIG_DIR"
         rm -r "$CONFIG_DIR"
     fi
 }
 
-uninstall_marzneshin_docker_images() {
-    images=$(docker images | grep marzneshin | awk '{print $3}')
+uninstall_fishy_docker_images() {
+    images=$(docker images | grep fishy | awk '{print $3}')
 
     if [ -n "$images" ]; then
-        colorized_echo yellow "Removing Docker images of Marzneshin"
+        colorized_echo yellow "Removing Docker images of Fishy Service"
         for image in $images; do
             if docker rmi "$image" >/dev/null 2>&1; then
                 colorized_echo yellow "Image $image removed"
@@ -182,7 +182,7 @@ uninstall_marzneshin_docker_images() {
     fi
 }
 
-uninstall_marzneshin_data_files() {
+uninstall_fishy_data_files() {
     if [ -d "$DATA_DIR" ]; then
         colorized_echo yellow "Removing directory: $DATA_DIR"
         rm -r "$DATA_DIR"
@@ -197,38 +197,38 @@ uninstall_marznode_data_files() {
 }
 
 
-up_marzneshin() {
+up_fishy() {
     $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" up -d --remove-orphans
 }
 
-down_marzneshin() {
+down_fishy() {
     $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" down
 }
 
-show_marzneshin_logs() {
+show_fishy_logs() {
     $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" logs
 }
 
-follow_marzneshin_logs() {
+follow_fishy_logs() {
     $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" logs -f
 }
 
-marzneshin_cli() {
-    $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" exec -e CLI_PROG_NAME="marzneshin cli" marzneshin /app/marzneshin-cli.py "$@"
+fishy_cli() {
+    $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" exec -e CLI_PROG_NAME="fishy cli" fishy /app/fishy-cli.py "$@"
 }
 
 
-update_marzneshin_script() {
-    colorized_echo blue "Updating marzneshin script"
-    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/marzneshin
-    colorized_echo green "marzneshin script updated successfully"
+update_fishy_script() {
+    colorized_echo blue "Updating fishy script"
+    curl -sSL $SCRIPT_URL | install -m 755 /dev/stdin /usr/local/bin/fishy
+    colorized_echo green "fishy script updated successfully"
 }
 
-update_marzneshin() {
+update_fishy() {
     $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" pull
 }
 
-is_marzneshin_installed() {
+is_fishy_installed() {
     if [ -d $CONFIG_DIR ]; then
         return 0
     else
@@ -236,7 +236,7 @@ is_marzneshin_installed() {
     fi
 }
 
-is_marzneshin_up() {
+is_fishy_up() {
     if [ -z "$($COMPOSE -f $COMPOSE_FILE ps -q -a)" ]; then
         return 1
     else
@@ -246,9 +246,9 @@ is_marzneshin_up() {
 
 install_command() {
     check_running_as_root
-    # Check if marzneshin is already installed
-    if is_marzneshin_installed; then
-        colorized_echo red "Marzneshin is already installed at $CONFIG_DIR"
+    # Check if fishy is already installed
+    if is_fishy_installed; then
+        colorized_echo red "Fishy Service is already installed at $CONFIG_DIR"
         read -p "Do you want to override the previous installation? (y/n) "
         if [[ ! $REPLY =~ ^[Yy]$ ]]; then
             colorized_echo red "Aborted installation"
@@ -291,42 +291,42 @@ install_command() {
 	done
 
     detect_compose
-    install_marzneshin_script
-    install_marzneshin $database $nightly
+    install_fishy_script
+    install_fishy $database $nightly
     install_marznode_xray_config
-    up_marzneshin
-    follow_marzneshin_logs
+    up_fishy
+    follow_fishy_logs
 }
 
 uninstall_command() {
     check_running_as_root
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin's not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service's not installed!"
         exit 1
     fi
 
-    read -p "Do you really want to uninstall Marzneshin? (y/n) "
+    read -p "Do you really want to uninstall Fishy Service? (y/n) "
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
         colorized_echo red "Aborted"
         exit 1
     fi
 
     detect_compose
-    if is_marzneshin_up; then
-        down_marzneshin
+    if is_fishy_up; then
+        down_fishy
     fi
-    uninstall_marzneshin_script
-    uninstall_marzneshin
-    uninstall_marzneshin_docker_images
+    uninstall_fishy_script
+    uninstall_fishy
+    uninstall_fishy_docker_images
 
-    read -p "Do you want to remove marzneshin & marznode data files too ($NODE_DATA_DIR, $DATA_DIR)? (y/n) "
+    read -p "Do you want to remove fishy & marznode data files too ($NODE_DATA_DIR, $DATA_DIR)? (y/n) "
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        colorized_echo green "Marzneshin uninstalled successfully"
+        colorized_echo green "Fishy Service uninstalled successfully"
     else
-        uninstall_marzneshin_data_files
+        uninstall_fishy_data_files
 	uninstall_marznode_data_files
-        colorized_echo green "Marzneshin uninstalled successfully"
+        colorized_echo green "Fishy Service uninstalled successfully"
     fi
 }
 
@@ -358,41 +358,41 @@ up_command() {
         shift
     done
 
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin is not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service is not installed!"
         exit 1
     fi
 
     detect_compose
 
-    if is_marzneshin_up; then
-        colorized_echo red "Marzneshin is already up"
+    if is_fishy_up; then
+        colorized_echo red "Fishy Service is already up"
         exit 1
     fi
 
-    up_marzneshin
+    up_fishy
     if [ "$no_logs" = false ]; then
-        follow_marzneshin_logs
+        follow_fishy_logs
     fi
 }
 
 down_command() {
 
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin's not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service's not installed!"
         exit 1
     fi
 
     detect_compose
 
-    if ! is_marzneshin_up; then
-        colorized_echo red "Marzneshin's already down"
+    if ! is_fishy_up; then
+        colorized_echo red "Fishy Service's already down"
         exit 1
     fi
 
-    down_marzneshin
+    down_fishy
 }
 
 restart_command() {
@@ -423,25 +423,25 @@ restart_command() {
         shift
     done
 
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin's not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service's not installed!"
         exit 1
     fi
 
     detect_compose
 
-    down_marzneshin
-    up_marzneshin
+    down_fishy
+    up_fishy
     if [ "$no_logs" = false ]; then
-        follow_marzneshin_logs
+        follow_fishy_logs
     fi
 }
 
 status_command() {
 
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
         echo -n "Status: "
         colorized_echo red "Not Installed"
         exit 1
@@ -449,7 +449,7 @@ status_command() {
 
     detect_compose
 
-    if ! is_marzneshin_up; then
+    if ! is_fishy_up; then
         echo -n "Status: "
         colorized_echo blue "Down"
         exit 1
@@ -476,7 +476,7 @@ status_command() {
 
 logs_command() {
     help() {
-        colorized_echo red "Usage: marzneshin logs [options]"
+        colorized_echo red "Usage: fishy logs [options]"
         echo ""
         echo "OPTIONS:"
         echo "  -h, --help        display this help message"
@@ -502,62 +502,62 @@ logs_command() {
         shift
     done
 
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin is not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service is not installed!"
         exit 1
     fi
 
     detect_compose
 
-    if ! is_marzneshin_up; then
-        colorized_echo red "Marzneshin is not up."
+    if ! is_fishy_up; then
+        colorized_echo red "Fishy Service is not up."
         exit 1
     fi
 
     if [ "$no_follow" = true ]; then
-        show_marzneshin_logs
+        show_fishy_logs
     else
-        follow_marzneshin_logs
+        follow_fishy_logs
     fi
 }
 
 cli_command() {
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin is not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service is not installed!"
         exit 1
     fi
 
     detect_compose
 
-    if ! is_marzneshin_up; then
-        colorized_echo red "Marzneshin is not up."
+    if ! is_fishy_up; then
+        colorized_echo red "Fishy Service is not up."
         exit 1
     fi
 
-    marzneshin_cli "$@"
+    fishy_cli "$@"
 }
 
 update_command() {
     check_running_as_root
-    # Check if marzneshin is installed
-    if ! is_marzneshin_installed; then
-        colorized_echo red "Marzneshin is not installed!"
+    # Check if fishy is installed
+    if ! is_fishy_installed; then
+        colorized_echo red "Fishy Service is not installed!"
         exit 1
     fi
 
     detect_compose
 
-    update_marzneshin_script
+    update_fishy_script
     colorized_echo blue "Pulling latest version"
-    update_marzneshin
+    update_fishy
 
-    colorized_echo blue "Restarting Marzneshin's services"
-    down_marzneshin
-    up_marzneshin
+    colorized_echo blue "Restarting Fishy Service's services"
+    down_fishy
+    up_fishy
 
-    colorized_echo blue "Marzneshin updated successfully"
+    colorized_echo blue "Fishy Service updated successfully"
 }
 
 
@@ -570,11 +570,11 @@ usage() {
     echo "  restart         Restart services"
     echo "  status          Show status"
     echo "  logs            Show logs"
-    echo "  cli             Marzneshin command-line interface"
-    echo "  install         Install Marzneshin"
+    echo "  cli             Fishy Service command-line interface"
+    echo "  install         Install Fishy Service"
     echo "  update          Update latest version"
-    echo "  uninstall       Uninstall Marzneshin"
-    echo "  install-script  Install Marzneshin script"
+    echo "  uninstall       Uninstall Fishy Service"
+    echo "  install-script  Install Fishy Service script"
     echo
 }
 
@@ -598,7 +598,7 @@ case "$1" in
     uninstall)
     shift; uninstall_command "$@";;
     install-script)
-    shift; install_marzneshin_script "$@";;
+    shift; install_fishy_script "$@";;
     *)
     usage;;
 esac

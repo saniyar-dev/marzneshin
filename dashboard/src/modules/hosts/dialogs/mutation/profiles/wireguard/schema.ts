@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { HostSchema } from "@marzneshin/modules/hosts";
+import { HostSchema } from "@fishy/modules/hosts";
 
 export const WireguardSchema = HostSchema.merge(z.object({
     path: z.string().nullable().optional(),

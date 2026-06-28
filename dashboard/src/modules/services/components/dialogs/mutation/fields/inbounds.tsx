@@ -7,18 +7,18 @@ import {
     Checkbox,
     ScrollArea,
     EntityFieldCard,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import {
     useInboundsQuery,
     type InboundType,
-} from "@marzneshin/modules/inbounds";
+} from "@fishy/modules/inbounds";
 import {
     useFormContext,
     type FieldValues,
     type ControllerRenderProps,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { cn } from "@marzneshin/common/utils";
+import { cn } from "@fishy/common/utils";
 import { Box, GlobeLock } from "lucide-react";
 
 export const InboundCard = ({

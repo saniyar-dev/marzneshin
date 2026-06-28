@@ -1,10 +1,10 @@
 import { ColumnDef } from "@tanstack/react-table"
 import {
     DataTableColumnHeader
-} from "@marzneshin/libs/entity-table"
-import i18n from "@marzneshin/features/i18n"
-import { Checkbox } from "@marzneshin/common/components"
-import { ServiceType } from "@marzneshin/modules/services"
+} from "@fishy/libs/entity-table"
+import i18n from "@fishy/features/i18n"
+import { Checkbox } from "@fishy/common/components"
+import { ServiceType } from "@fishy/modules/services"
 
 export const columns: ColumnDef<ServiceType>[] = [
     {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetch } from "@marzneshin/common/utils";
+import { fetch } from "@fishy/common/utils";
 import { UsersQueryFetchKey } from "../..";
 
 type UsageMetric = number[];

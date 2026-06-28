@@ -4,7 +4,7 @@ Marzban-compatible subscription token codec.
 Matches the exact algorithm in Marzban's
 `app/utils/jwt.py:create_subscription_token` and
 `get_subscription_payload` so that any Marzban-issued subscription URL
-continues to work against Marzneshin's `/sub/{token}` route after
+continues to work against Fishy Service's `/sub/{token}` route after
 migration.
 """
 

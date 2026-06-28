@@ -3,10 +3,10 @@ import {
     FormLabel,
     FormControl,
     Button,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { useFormContext, useWatch, useController } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { useLogoUploadMutation } from "@marzneshin/modules/settings/branding";
+import { useLogoUploadMutation } from "@fishy/modules/settings/branding";
 import { Trash2, Upload, Image as ImageIcon } from "lucide-react";
 import { useRef } from "react";
 import type { Schema } from "../schema";

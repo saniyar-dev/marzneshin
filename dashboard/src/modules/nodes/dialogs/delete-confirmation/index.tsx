@@ -1,7 +1,7 @@
 
-import { DeleteConfirmation } from '@marzneshin/common/components'
+import { DeleteConfirmation } from '@fishy/common/components'
 import { FC, useEffect } from 'react'
-import { NodeType, useNodesDeletionMutation } from '@marzneshin/modules/nodes'
+import { NodeType, useNodesDeletionMutation } from '@fishy/modules/nodes'
 
 interface NodesDeleteConfirmationDialogProps {
     onOpenChange: (state: boolean) => void

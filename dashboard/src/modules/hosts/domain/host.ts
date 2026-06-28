@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ProtocolType } from "@marzneshin/modules/inbounds";
+import { ProtocolType } from "@fishy/modules/inbounds";
 
 export const HostSchema = z.object({
     remark: z.string().min(1, "Remark is required"),

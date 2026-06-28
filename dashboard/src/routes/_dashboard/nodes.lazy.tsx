@@ -1,9 +1,9 @@
-import { AlertCard, Page, Loading } from '@marzneshin/common/components'
-import { NodesTable } from '@marzneshin/modules/nodes'
+import { AlertCard, Page, Loading } from '@fishy/common/components'
+import { NodesTable } from '@fishy/modules/nodes'
 import { Link, createLazyFileRoute, Outlet } from '@tanstack/react-router'
 import { type FC, Suspense } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SudoRoute } from '@marzneshin/libs/sudo-routes'
+import { SudoRoute } from '@fishy/libs/sudo-routes'
 
 export const NodesPage: FC = () => {
   const { t } = useTranslation()

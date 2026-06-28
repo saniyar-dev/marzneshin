@@ -1,9 +1,9 @@
-import { useServicesQuery } from '@marzneshin/modules/services';
+import { useServicesQuery } from '@fishy/modules/services';
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next';
 import {
     AlertCard,
-} from '@marzneshin/common/components';
+} from '@fishy/common/components';
 
 export const UsersNoServiceAlert = () => {
     const { t } = useTranslation();

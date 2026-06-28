@@ -1,16 +1,16 @@
 import { ColumnDef } from "@tanstack/react-table"
-import { NodesStatusBadge, NodeType, NodesStatus } from "@marzneshin/modules/nodes"
+import { NodesStatusBadge, NodeType, NodesStatus } from "@fishy/modules/nodes"
 import {
     DataTableActionsCell,
     DataTableColumnHeader
-} from "@marzneshin/libs/entity-table"
-import i18n from "@marzneshin/features/i18n"
+} from "@fishy/libs/entity-table"
+import i18n from "@fishy/features/i18n"
 import {
     type ColumnActions
-} from "@marzneshin/libs/entity-table";
+} from "@fishy/libs/entity-table";
 import {
     NoPropogationButton,
-} from "@marzneshin/common/components"
+} from "@fishy/common/components"
 
 export const columns = (actions: ColumnActions<NodeType>): ColumnDef<NodeType>[] => ([
     {

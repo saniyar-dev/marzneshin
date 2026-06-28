@@ -1,5 +1,5 @@
 
-import { Button } from '@marzneshin/common/components';
+import { Button } from '@fishy/common/components';
 import { PanelRightClose, PanelRightOpen } from 'lucide-react';
 import { FC } from 'react';
 

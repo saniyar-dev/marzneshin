@@ -6,7 +6,7 @@ import {
 } from "../../sections";
 import {
     Accordion,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 
 export const TuicProfileFields = () => {
     return (

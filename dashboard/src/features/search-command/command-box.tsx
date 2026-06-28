@@ -5,9 +5,9 @@ import {
     CommandInput,
     CommandList,
     ScrollArea,
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { SearchBox } from "./search-box";
-import { useAuth } from "@marzneshin/modules/auth";
+import { useAuth } from "@fishy/modules/auth";
 import { CommandItems } from "./command-items";
 import { commandItems } from "./commands";
 

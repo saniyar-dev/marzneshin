@@ -3,8 +3,8 @@ import {
     Alert,
     AlertDescription,
     AlertTitle,
-} from "@marzneshin/common/components";
-import { cn } from "@marzneshin/common/utils";
+} from "@fishy/common/components";
+import { cn } from "@fishy/common/utils";
 
 interface AlertCardProps {
     variant?: "warning" | "default" | "destructive";

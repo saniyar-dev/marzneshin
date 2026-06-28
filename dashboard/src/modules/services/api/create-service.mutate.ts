@@ -1,8 +1,8 @@
-import { ServiceMutationType, ServicesQueryFetchKey } from "@marzneshin/modules/services";
+import { ServiceMutationType, ServicesQueryFetchKey } from "@fishy/modules/services";
 import { useMutation } from "@tanstack/react-query";
-import { fetch, queryClient } from "@marzneshin/common/utils";
+import { fetch, queryClient } from "@fishy/common/utils";
 import { toast } from "sonner";
-import i18n from "@marzneshin/features/i18n";
+import i18n from "@fishy/features/i18n";
 
 export async function fetchCreateService(service: ServiceMutationType): Promise<ServiceMutationType> {
     return fetch('/services', { method: 'post', body: service }).then((service) => {

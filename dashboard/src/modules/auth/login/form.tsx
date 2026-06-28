@@ -1,6 +1,6 @@
 
-import { fetch } from "@marzneshin/common/utils"
-import { LoginSchema, useAuth } from "@marzneshin/modules/auth";
+import { fetch } from "@fishy/common/utils"
+import { LoginSchema, useAuth } from "@fishy/modules/auth";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ import {
     FormLabel,
     FormMessage,
     Input
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import { useTranslation } from "react-i18next";
 import { FormError } from "./form-error";
 

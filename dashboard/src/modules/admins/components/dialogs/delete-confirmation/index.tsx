@@ -1,9 +1,9 @@
-import { DeleteConfirmation } from "@marzneshin/common/components";
+import { DeleteConfirmation } from "@fishy/common/components";
 import { type FC, useEffect } from "react";
 import {
     type AdminType,
     useAdminsDeletionMutation,
-} from "@marzneshin/modules/admins";
+} from "@fishy/modules/admins";
 
 interface AdminsDeleteConfirmationDialogProps {
     onOpenChange: (state: boolean) => void;

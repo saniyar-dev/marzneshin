@@ -1,8 +1,8 @@
-import { AdminType, AdminsQueryFetchKey } from "@marzneshin/modules/admins";
+import { AdminType, AdminsQueryFetchKey } from "@fishy/modules/admins";
 import { useMutation } from "@tanstack/react-query";
-import { fetch, queryClient } from "@marzneshin/common/utils";
+import { fetch, queryClient } from "@fishy/common/utils";
 import { toast } from "sonner";
-import i18n from "@marzneshin/features/i18n";
+import i18n from "@fishy/features/i18n";
 
 export async function fetchDeleteAdmin(admin: AdminType): Promise<AdminType> {
     return fetch(`/admins/${admin.username}`, { method: 'delete' }).then((admin) => {

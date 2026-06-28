@@ -11,7 +11,7 @@
     "prefix": ""
   },
   "aliases": {
-    "components": "@marzneshin/components",
-    "utils": "@marzneshin/utils"
+    "components": "@fishy/components",
+    "utils": "@fishy/utils"
   }
 }

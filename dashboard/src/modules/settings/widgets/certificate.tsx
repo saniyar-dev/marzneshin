@@ -1,9 +1,9 @@
 import {
     MiniWidget
-} from "@marzneshin/common/components";
+} from "@fishy/common/components";
 import {
     CertificateButton
-} from "@marzneshin/modules/settings";
+} from "@fishy/modules/settings";
 import { useTranslation } from "react-i18next";
 
 export const CertificateWidget = () => {

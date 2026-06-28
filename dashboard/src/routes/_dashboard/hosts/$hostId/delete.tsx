@@ -5,8 +5,8 @@ import {
 import {
     HostsDeleteConfirmationDialog,
     useRouterHostContext,
-} from "@marzneshin/modules/hosts";
-import { useDialog } from "@marzneshin/common/hooks";
+} from "@fishy/modules/hosts";
+import { useDialog } from "@fishy/common/hooks";
 
 const HostDelete = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useDialog(true);

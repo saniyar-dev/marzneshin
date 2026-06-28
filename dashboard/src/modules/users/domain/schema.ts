@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { DATA_LIMIT_METRIC } from "@marzneshin/modules/users";
+import { DATA_LIMIT_METRIC } from "@fishy/modules/users";
 
 export const UserSchema = z.object({
     username: z

@@ -1,6 +1,6 @@
-import type { NodeType } from "@marzneshin/modules/nodes";
+import type { NodeType } from "@fishy/modules/nodes";
 import { useQuery } from "@tanstack/react-query";
-import { fetch } from "@marzneshin/common/utils";
+import { fetch } from "@fishy/common/utils";
 
 type NodesSettingsQueryKey = [string, number, string, string];
 

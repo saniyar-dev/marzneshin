@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ExpireStrategy } from "@marzneshin/modules/users";
+import { ExpireStrategy } from "@fishy/modules/users";
 
 abstract class ExpirationMethodStrategy {
     protected abstract strategy: string;

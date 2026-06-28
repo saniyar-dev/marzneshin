@@ -1,5 +1,5 @@
-import { Alert, AlertDescription, AlertTitle } from "@marzneshin/common/components"
-import { cn } from "@marzneshin/common/utils";
+import { Alert, AlertDescription, AlertTitle } from "@fishy/common/components"
+import { cn } from "@fishy/common/utils";
 
 interface FormErrorProps {
     className: string;

@@ -1,11 +1,11 @@
 
 import { ColumnDef } from "@tanstack/react-table"
-import { InboundType } from "@marzneshin/modules/inbounds"
+import { InboundType } from "@fishy/modules/inbounds"
 import {
     DataTableColumnHeader
-} from "@marzneshin/libs/entity-table"
-import i18n from "@marzneshin/features/i18n"
-import { Badge, Checkbox } from "@marzneshin/common/components"
+} from "@fishy/libs/entity-table"
+import i18n from "@fishy/features/i18n"
+import { Badge, Checkbox } from "@fishy/common/components"
 
 export const columns: ColumnDef<InboundType>[] = [
     {

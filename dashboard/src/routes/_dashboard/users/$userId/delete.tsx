@@ -5,8 +5,8 @@ import {
 import {
     UsersDeleteConfirmationDialog,
     useRouterUserContext,
-} from "@marzneshin/modules/users";
-import { useDialog } from "@marzneshin/common/hooks";
+} from "@fishy/modules/users";
+import { useDialog } from "@fishy/common/hooks";
 
 const UserDelete = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useDialog(true);

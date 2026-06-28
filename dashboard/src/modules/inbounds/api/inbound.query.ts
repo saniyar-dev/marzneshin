@@ -1,6 +1,6 @@
-import { HostType } from "@marzneshin/modules/hosts";
+import { HostType } from "@fishy/modules/hosts";
 import { useQuery } from "@tanstack/react-query";
-import { fetch } from "@marzneshin/common/utils";
+import { fetch } from "@fishy/common/utils";
 
 export async function fetchInbound({ queryKey }: { queryKey: [string, number] }): Promise<HostType> {
     return fetch(`/inbounds/${queryKey[1]}`);

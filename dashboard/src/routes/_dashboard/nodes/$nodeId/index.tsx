@@ -5,8 +5,8 @@ import {
 import {
     useRouterNodeContext,
     NodesSettingsDialog,
-} from "@marzneshin/modules/nodes";
-import { useDialog } from "@marzneshin/common/hooks";
+} from "@fishy/modules/nodes";
+import { useDialog } from "@fishy/common/hooks";
 
 const NodeOpen = () => {
     const [settingsDialogOpen, setSettingsDialogOpen] = useDialog(true);

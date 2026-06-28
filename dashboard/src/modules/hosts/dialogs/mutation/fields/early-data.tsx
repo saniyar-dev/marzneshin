@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@marzneshin/common/components";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@fishy/common/components";
 import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 

@@ -1,8 +1,8 @@
-import { Button, HStack } from "@marzneshin/common/components";
+import { Button, HStack } from "@fishy/common/components";
 import { useTranslation } from "react-i18next";
-import { getSubscriptionLink } from "@marzneshin/common/utils";
-import { useUserSubscriptionRevokeCmd } from "@marzneshin/modules/users";
-import { CopyToClipboardButton } from "@marzneshin/common/components";
+import { getSubscriptionLink } from "@fishy/common/utils";
+import { useUserSubscriptionRevokeCmd } from "@fishy/modules/users";
+import { CopyToClipboardButton } from "@fishy/common/components";
 import { SquareCode } from "lucide-react";
 import type { QRCodeProps } from "./qrcode";
 import type { FC } from 'react';

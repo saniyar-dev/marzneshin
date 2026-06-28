@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { projectInfo } from "@marzneshin/common/utils";
+import { projectInfo } from "@fishy/common/utils";
 import { ofetch } from "ofetch";
 
 /**
@@ -19,7 +19,7 @@ export interface GithubRepoStatsResponse {
 
 export const GithubRepoStatsResponseDefault: GithubRepoStatsResponse = {
     full_name: projectInfo.repo,
-    description: "A fork of Marzban aiming for scalability",
+    description: "A censorship circumvention tool aiming for scalability",
     stargazers_count: 0,
 }
 

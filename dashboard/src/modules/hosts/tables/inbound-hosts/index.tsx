@@ -1,15 +1,15 @@
 import {
     HostType,
     fetchHosts
-} from '@marzneshin/modules/hosts';
+} from '@fishy/modules/hosts';
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from 'react';
 import {
     useInboundsQuery,
-} from '@marzneshin/modules/inbounds';
-import { SidebarEntityTable } from '@marzneshin/libs/entity-table';
+} from '@fishy/modules/inbounds';
+import { SidebarEntityTable } from '@fishy/libs/entity-table';
 import { columns } from './columns';
-import { useDialog } from '@marzneshin/common/hooks';
+import { useDialog } from '@fishy/common/hooks';
 import {
     InboundNotSelectedAlertDialog
 } from './inbound-not-selected-alert-dialog';

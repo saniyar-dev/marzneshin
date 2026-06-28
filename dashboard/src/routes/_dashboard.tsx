@@ -7,12 +7,12 @@ import {
     Loading,
     HeaderLogo,
     HeaderMenu,
-} from "@marzneshin/common/components";
-import { useAuth } from "@marzneshin/modules/auth";
-import { DashboardSidebar, ToggleButton } from "@marzneshin/features/sidebar";
-import { usePanelToggle } from "@marzneshin/features/sidebar/use-panel-toggle";
-import { useScreenBreakpoint } from "@marzneshin/common/hooks/use-screen-breakpoint";
-import { cn } from "@marzneshin/common/utils";
+} from "@fishy/common/components";
+import { useAuth } from "@fishy/modules/auth";
+import { DashboardSidebar, ToggleButton } from "@fishy/features/sidebar";
+import { usePanelToggle } from "@fishy/features/sidebar/use-panel-toggle";
+import { useScreenBreakpoint } from "@fishy/common/hooks/use-screen-breakpoint";
+import { cn } from "@fishy/common/utils";
 import { Suspense } from "react";
 import {
     Outlet,
@@ -20,9 +20,9 @@ import {
     createFileRoute,
     redirect
 } from "@tanstack/react-router";
-import { useGithubRepoStatsQuery, GithubRepo } from "@marzneshin/features/github-repo";
-import { CommandBox } from "@marzneshin/features/search-command";
-import { DashboardBottomMenu } from "@marzneshin/features/bottom-menu";
+import { useGithubRepoStatsQuery, GithubRepo } from "@fishy/features/github-repo";
+import { CommandBox } from "@fishy/features/search-command";
+import { DashboardBottomMenu } from "@fishy/features/bottom-menu";
 
 export const DashboardLayout = () => {
     const isDesktop = useScreenBreakpoint("md");

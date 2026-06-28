@@ -1,5 +1,5 @@
-import { Page, VStack } from "@marzneshin/common/components";
-import { BrandingWidget } from "@marzneshin/modules/settings";
+import { Page, VStack } from "@fishy/common/components";
+import { BrandingWidget } from "@fishy/modules/settings";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 

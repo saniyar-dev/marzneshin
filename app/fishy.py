@@ -53,7 +53,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 app = FastAPI(
-    title="MarzneshinAPI",
+    title="Fishy Service API",
     description="Unified GUI Censorship Resistant Solution Powered by Xray",
     version=__version__,
     lifespan=lifespan,

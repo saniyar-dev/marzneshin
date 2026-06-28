@@ -214,7 +214,7 @@ def user_subscription_with_client_type(
 # Compatible with Marzban-style subscription URLs.
 def _resolve_user_by_token(token: str, db) -> User | None:
     # Fast path: exact match against stored sub_token (used by
-    # Marzneshin's own subscription_url).
+    # Fishy Service's own subscription_url).
     db_user = crud.get_user_by_sub_token(db, token)
     if db_user:
         return db_user
