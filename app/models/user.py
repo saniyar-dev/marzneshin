@@ -60,6 +60,8 @@ class User(BaseModel):
     key: str = Field(default_factory=lambda: secrets.token_hex(16))
     sub_token: str | None = Field(None)
     marzban_username: str | None = Field(None)
+    used_traffic: int = Field(default=0, ge=0)
+    lifetime_used_traffic: int = Field(default=0, ge=0)
     data_limit: int | None = Field(
         ge=0, default=None, description="data_limit can be 0 or greater"
     )

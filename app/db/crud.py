@@ -652,6 +652,8 @@ def create_user(
         admin=admin,
         data_limit_reset_strategy=user.data_limit_reset_strategy,
         note=user.note,
+        used_traffic=user.used_traffic,
+        lifetime_used_traffic=user.lifetime_used_traffic,
     )
     db.add(dbuser)
     db.commit()
