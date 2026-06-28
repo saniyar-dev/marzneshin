@@ -9,7 +9,8 @@ COPY .npmrc /app/.npmrc
 
 RUN corepack enable \
  && corepack prepare pnpm@9 --activate \
- && pnpm install --frozen-lockfile
+ && pnpm install --frozen-lockfile --ignore-scripts --reporter=silent \
+ && pnpm rebuild esbuild @swc/core
 
 COPY dashboard/ ./
 RUN pnpm build
