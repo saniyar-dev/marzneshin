@@ -17,7 +17,10 @@ services:
         restart: always
         network_mode: host
         environment:
+            DEBUG: "True"
             SERVICE_ADDRESS: "127.0.0.1"
+            XRAY_VLESS_REALITY_FLOW: ""
+            AUTH_GENERATION_ALGORITHM: "plain"
             INSECURE: "True"
             XRAY_EXECUTABLE_PATH: "/usr/local/bin/xray"
             XRAY_ASSETS_PATH: "/usr/local/lib/xray"

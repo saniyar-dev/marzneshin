@@ -19,6 +19,8 @@ services:
         environment:
             SERVICE_ADDRESS: "127.0.0.1"
             INSECURE: "True"
+            XRAY_VLESS_REALITY_FLOW: ""
+            AUTH_GENERATION_ALGORITHM: "plain"
             XRAY_EXECUTABLE_PATH: "/usr/local/bin/xray"
             XRAY_ASSETS_PATH: "/usr/local/lib/xray"
             XRAY_CONFIG_PATH: "/var/lib/marznode/xray_config.json"
