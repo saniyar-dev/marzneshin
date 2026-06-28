@@ -1,6 +1,9 @@
 FROM node:20-bookworm-slim AS dashboard
 WORKDIR /app/dashboard
 
+ARG VITE_BASE_API=/api/
+ENV VITE_BASE_API=${VITE_BASE_API}
+
 COPY dashboard/package.json dashboard/pnpm-lock.yaml ./
 COPY .npmrc /app/.npmrc
 
