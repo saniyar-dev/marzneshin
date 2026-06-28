@@ -2,7 +2,6 @@
 
 SERVICE_NAME="fishy"
 SERVICE_DESCRIPTION="Fishy Service"
-SERVICE_DOCUMENTATION="https://docs.fishy.com"
 MAIN_PY_PATH="$PWD/main.py"
 SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 
@@ -10,7 +9,6 @@ SERVICE_FILE="/etc/systemd/system/$SERVICE_NAME.service"
 cat > $SERVICE_FILE <<EOF
 [Unit]
 Description=$SERVICE_DESCRIPTION
-Documentation=$SERVICE_DOCUMENTATION
 After=network.target nss-lookup.target
 
 [Service]

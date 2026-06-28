@@ -20,7 +20,6 @@ import {
     createFileRoute,
     redirect
 } from "@tanstack/react-router";
-import { useGithubRepoStatsQuery, GithubRepo } from "@fishy/features/github-repo";
 import { CommandBox } from "@fishy/features/search-command";
 import { DashboardBottomMenu } from "@fishy/features/bottom-menu";
 
@@ -33,7 +32,6 @@ export const DashboardLayout = () => {
         toggleCollapse,
     } = usePanelToggle(isDesktop);
     const { isSudo } = useAuth();
-    const { data: stats } = useGithubRepoStatsQuery()
 
     return (
         <div className="flex flex-col w-screen h-screen">
@@ -53,12 +51,7 @@ export const DashboardLayout = () => {
                     </>
                 }
                 center={<CommandBox />}
-                end={
-                    <>
-                        <GithubRepo {...stats} variant={isDesktop ? "full" : "mini"} />
-                        <HeaderMenu />
-                    </>
-                }
+                end={<HeaderMenu />}
             />
             <div className="flex flex-1 overflow-hidden">
                 {isDesktop ? (

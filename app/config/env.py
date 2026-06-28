@@ -33,9 +33,9 @@ VITE_BASE_API = (
     else config("VITE_BASE_API", default="/api/")
 )
 
-SUBSCRIPTION_URL_PREFIX = config("SUBSCRIPTION_URL_PREFIX", default="").strip(
-    "/"
-)
+SUBSCRIPTION_URL_PREFIX = config(
+    "SUBSCRIPTION_URL_PREFIX", default="https://panel.home-lab.ir"
+).strip("/")
 
 TELEGRAM_API_TOKEN = config("TELEGRAM_API_TOKEN", default="")
 TELEGRAM_ADMIN_ID = config(

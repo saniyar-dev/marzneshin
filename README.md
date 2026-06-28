@@ -39,7 +39,6 @@
 ## Table of Contents
 
 - [Overview](#overview)
-  - [Docs](#docs)
   - [Features](#features)
   - [Supported Languages](#supported-languages)
 - [Marznode](#marznode)
@@ -54,10 +53,6 @@ Fishy Service is a censorship circumvention tool utilizing other censorship circ
 Fishy Service controls the [Marznodes](https://github.com/marzneshin/marznode)
 connected to it; monitoring/disabling/enabling users on marznode instances while
 marznode manages and interacts with vpn backends (such as xray).
-
-### Docs
-
-Fishy Service documentation may be found [here](https://docs.fishy.com).
 
 ### Features
 
@@ -114,8 +109,7 @@ Published under [AGPL-3.0](./LICENSE).
 
 # Contributors
 
-We ❤️‍🔥 contributors! If you'd like to contribute, please check out our [Contributing Guidelines](https://docs.fishy.com/docs/contribution-guideline) and
-feel free to submit a pull request or open an issue. We also welcome you to join
+We ❤️‍🔥 contributors! Feel free to submit a pull request or open an issue. We also welcome you to join
 our [Telegram](https://t.me/fishys) group for either support or contributing guidance.
 
 Check [open issues](https://github.com/fishy/fishy/issues) to help the progress of this project.

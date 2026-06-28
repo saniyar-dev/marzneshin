@@ -5,9 +5,8 @@ import {
 import { useIsCurrentRoute } from "@fishy/common/hooks";
 import type { FC } from "react";
 import { sidebarItems as sidebarItemsSudoAdmin, sidebarItemsNonSudoAdmin } from ".";
-import { projectInfo, cn } from "@fishy/common/utils";
+import { cn } from "@fishy/common/utils";
 import { useAuth } from "@fishy/modules/auth";
-import { SupportUs } from "@fishy/features/support-us";
 
 interface DashboardSidebarProps {
     collapsed: boolean;
@@ -53,13 +52,6 @@ export const DashboardSidebar: FC<DashboardSidebarProps> = ({
                                 </div>
                             ))}
                         </Sidebar.Body>
-                        <Sidebar.Footer>
-                            {collapsed ?
-                                <SupportUs variant="view" donationLink={projectInfo.donationLink} structure="popover" />
-                                :
-                                <SupportUs variant="local-storage" donationLink={projectInfo.donationLink} structure="card" />
-                            }
-                        </Sidebar.Footer>
                     </div>
                 </Sidebar>
             </nav>
