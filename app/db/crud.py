@@ -800,9 +800,14 @@ def get_admin(db: Session, username: str) -> Admin | None:
 
 
 def create_admin(db: Session, admin: AdminCreate):
+    # If a pre-computed `hashed_password` was passed (e.g. during migration
+    # from Marzban), use it verbatim — both panels share the same bcrypt
+    # scheme so the existing hash verifies unchanged. Otherwise hash the
+    # plaintext `password` field as before.
+    hashed = admin.hashed_password or pwd_context.hash(admin.password)
     dbadmin = Admin(
         username=admin.username,
-        hashed_password=admin.hashed_password,
+        hashed_password=hashed,
         is_sudo=admin.is_sudo,
         enabled=admin.enabled,
         all_services_access=admin.all_services_access,

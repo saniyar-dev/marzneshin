@@ -39,10 +39,7 @@ class AdminBrandingModify(BaseModel):
 class AdminCreate(Admin):
     username: str
     password: str
-
-    @property
-    def hashed_password(self):
-        return pwd_context.hash(self.password)
+    hashed_password: str | None = None
 
 
 class AdminResponse(Admin):
@@ -53,14 +50,7 @@ class AdminResponse(Admin):
 class AdminModify(Admin):
     password: str
     is_sudo: bool
-
-    @property
-    def hashed_password(self):
-        return (
-            pwd_context.hash(self.password)
-            if self.password is not None
-            else None
-        )
+    hashed_password: str | None = None
 
 
 class AdminPartialModify(AdminModify):
