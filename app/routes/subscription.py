@@ -5,12 +5,14 @@ from fastapi import APIRouter
 from fastapi import Header, HTTPException, Path, Request, Response
 from starlette.responses import HTMLResponse
 
+from app.config.env import MARZBAN_JWT_TOKEN
 from app.db import crud
 from app.db.models import Settings, User
 from app.dependencies import DBDep, SubUserDep, StartDateDep, EndDateDep
 from app.models.settings import SubscriptionSettings
 from app.models.system import TrafficUsageSeries
 from app.models.user import UserResponse
+from app.utils.marzban_token import decode_marzban_subscription_token
 from app.utils.share import (
     encode_title,
     generate_subscription,
@@ -211,7 +213,22 @@ def user_subscription_with_client_type(
 # Token-based routes — single path segment after /sub/.
 # Compatible with Marzban-style subscription URLs.
 def _resolve_user_by_token(token: str, db) -> User | None:
-    return crud.get_user_by_sub_token(db, token)
+    # Fast path: exact match against stored sub_token (used by
+    # Marzneshin's own subscription_url).
+    db_user = crud.get_user_by_sub_token(db, token)
+    if db_user:
+        return db_user
+
+    # Slow path: decode the Marzban-style token (uses
+    # MARZBAN_JWT_TOKEN) to recover the original username, then
+    # look it up by `marzban_username`. This makes every existing
+    # Marzban-issued URL continue to work after migration.
+    if not MARZBAN_JWT_TOKEN:
+        return None
+    username = decode_marzban_subscription_token(token, MARZBAN_JWT_TOKEN)
+    if not username:
+        return None
+    return crud.get_user_by_marzban_username(db, username)
 
 
 @router.get("/{token}")
@@ -222,8 +239,11 @@ def user_subscription_by_token(
     user_agent: str = Header(default=""),
 ):
     """
-    Marzban-compatible subscription link. Resolves user by opaque
-    `sub_token` instead of `{username}/{key}`.
+    Marzban-compatible subscription link. Resolves user by either
+    the stored `sub_token` (newly generated) or by decoding the
+    token against `MARZBAN_JWT_TOKEN` and looking up the user by
+    their original `marzban_username` (preserves URLs issued
+    before migration).
     """
     db_user = _resolve_user_by_token(token, db)
     if not db_user:

@@ -84,6 +84,11 @@ AUTH_GENERATION_ALGORITHM = config(
     default=AuthAlgorithm.XXH128,
 )
 
+# Marzban JWT secret — used to verify Marzban-compatible subscription
+# tokens at the /sub/{token} route so users don't need to re-fetch
+# their subscription URLs after migrating from Marzban.
+MARZBAN_JWT_TOKEN = config("MARZBAN_JWT_TOKEN", default="")
+
 # recurrent notifications
 
 # timeout between each retry of sending a notification in seconds

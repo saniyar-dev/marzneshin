@@ -352,6 +352,14 @@ def get_user_by_sub_token(db: Session, sub_token: str):
     return db.query(User).filter(User.sub_token == sub_token).first()
 
 
+def get_user_by_marzban_username(db: Session, marzban_username: str):
+    return (
+        db.query(User)
+        .filter(User.marzban_username == marzban_username)
+        .first()
+    )
+
+
 UsersSortingOptions = Enum(
     "UsersSortingOptions",
     {
@@ -632,6 +640,7 @@ def create_user(
         username=user.username,
         key=user.key,
         sub_token=user.sub_token,
+        marzban_username=user.marzban_username,
         expire_strategy=user.expire_strategy,
         expire_date=user.expire_date,
         usage_duration=user.usage_duration,

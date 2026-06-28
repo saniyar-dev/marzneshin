@@ -157,6 +157,7 @@ class User(Base):
     username = Column(String(32), unique=True, index=True)
     key = Column(String(64), unique=True)
     sub_token = Column(String(128), unique=True, nullable=True, index=True)
+    marzban_username = Column(String(64), unique=True, nullable=True, index=True)
     activated = Column(Boolean, nullable=False, default=True)
     enabled = Column(
         Boolean,
