@@ -3,6 +3,11 @@ WORKDIR /app/dashboard
 
 ARG VITE_BASE_API=/api/
 ENV VITE_BASE_API=${VITE_BASE_API}
+ENV NODE_OPTIONS=--max-old-space-size=4096
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends git ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
 COPY dashboard/package.json dashboard/pnpm-lock.yaml ./
 COPY .npmrc /app/.npmrc
