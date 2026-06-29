@@ -1,4 +1,11 @@
 services:
+    haproxy:
+        image: registry.proxy.vectorcloud.ir/library/haproxy:3.0-alpine
+        restart: always
+        user: root
+        network_mode: host
+        volumes:
+            - /var/lib/haproxy:/usr/local/etc/haproxy
     fishy:
         build: .
         restart: always
