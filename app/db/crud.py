@@ -16,6 +16,8 @@ from app.db.models import (
     JWT,
     TLS,
     Admin,
+    AdminBilling,
+    AdminBillingEvent,
     Node,
     NodeUserUsage,
     InboundHost,
@@ -32,6 +34,7 @@ from app.models.admin import (
     AdminPartialModify,
     pwd_context,
 )
+from app.models.billing import AdminBillingEventType
 from app.models.node import (
     NodeCreate,
     NodeModify,
@@ -662,6 +665,17 @@ def create_user(
     db.add(dbuser)
     db.commit()
     db.refresh(dbuser)
+
+    if admin is not None and dbuser.data_limit:
+        record_billing_event(
+            db,
+            admin_id=admin.id,
+            user_id=dbuser.id,
+            event_type=AdminBillingEventType.INITIAL_ALLOCATION,
+            bytes_amount=dbuser.data_limit,
+            note=f"user {dbuser.username} created with {dbuser.data_limit}B limit",
+        )
+
     return dbuser
 
 
@@ -679,6 +693,7 @@ def update_user(
     modify: UserModify,
     allowed_services: list | None = None,
 ):
+    old_data_limit = dbuser.data_limit
     if modify.data_limit is not None:
         dbuser.data_limit = modify.data_limit or None
 
@@ -725,10 +740,34 @@ def update_user(
 
     db.commit()
     db.refresh(dbuser)
+
+    if (
+        modify.data_limit is not None
+        and dbuser.data_limit
+        and dbuser.admin_id
+        and (old_data_limit is None or dbuser.data_limit > old_data_limit)
+    ):
+        delta = dbuser.data_limit - (old_data_limit or 0)
+        record_billing_event(
+            db,
+            admin_id=dbuser.admin_id,
+            user_id=dbuser.id,
+            event_type=AdminBillingEventType.LIMIT_INCREASE,
+            bytes_amount=delta,
+            note=(
+                f"data_limit increased from {old_data_limit or 0}B "
+                f"to {dbuser.data_limit}B for user {dbuser.username}"
+            ),
+        )
+
     return dbuser
 
 
-def reset_user_data_usage(db: Session, dbuser: User):
+def reset_user_data_usage(
+    db: Session,
+    dbuser: User,
+    kind: str = AdminBillingEventType.MANUAL_RESET,
+):
     dbuser.traffic_reset_at = datetime.utcnow()
 
     dbuser.used_traffic = 0
@@ -737,6 +776,20 @@ def reset_user_data_usage(db: Session, dbuser: User):
 
     db.commit()
     db.refresh(dbuser)
+
+    if dbuser.data_limit and dbuser.admin_id:
+        record_billing_event(
+            db,
+            admin_id=dbuser.admin_id,
+            user_id=dbuser.id,
+            event_type=kind,
+            bytes_amount=dbuser.data_limit,
+            note=(
+                f"{kind} reset for user {dbuser.username} "
+                f"(data_limit={dbuser.data_limit}B)"
+            ),
+        )
+
     return dbuser
 
 
@@ -769,6 +822,18 @@ def reset_all_users_data_usage(db: Session, admin: Optional[Admin] = None):
 
     for db_user in query.all():
         db_user.used_traffic = 0
+        if db_user.data_limit and db_user.admin_id:
+            record_billing_event(
+                db,
+                admin_id=db_user.admin_id,
+                user_id=db_user.id,
+                event_type=AdminBillingEventType.MANUAL_RESET,
+                bytes_amount=db_user.data_limit,
+                note=(
+                    f"bulk reset for user {db_user.username} "
+                    f"(data_limit={db_user.data_limit}B)"
+                ),
+            )
 
     db.commit()
 
@@ -1079,3 +1144,94 @@ def update_node_status(
         db_node.message = message
     db_node.last_status_change = datetime.utcnow()
     db.commit()
+
+
+def get_or_create_billing(db: Session, admin_id: int) -> AdminBilling:
+    record = (
+        db.query(AdminBilling)
+        .filter(AdminBilling.admin_id == admin_id)
+        .first()
+    )
+    if not record:
+        record = AdminBilling(admin_id=admin_id)
+        db.add(record)
+        db.commit()
+        db.refresh(record)
+    return record
+
+
+def record_billing_event(
+    db: Session,
+    admin_id: int,
+    user_id: int,
+    event_type: str,
+    bytes_amount: int,
+    note: str | None = None,
+) -> AdminBillingEvent:
+    billing = get_or_create_billing(db, admin_id)
+    billing.total_billable_bytes = (
+        billing.total_billable_bytes or 0
+    ) + bytes_amount
+    billing.updated_at = datetime.utcnow()
+
+    event = AdminBillingEvent(
+        admin_id=admin_id,
+        user_id=user_id,
+        event_type=event_type,
+        bytes_amount=bytes_amount,
+        occurred_at=datetime.utcnow(),
+        note=note,
+    )
+    db.add(event)
+    db.commit()
+    db.refresh(event)
+    return event
+
+
+def get_billing(db: Session, admin_id: int) -> AdminBilling | None:
+    return (
+        db.query(AdminBilling)
+        .filter(AdminBilling.admin_id == admin_id)
+        .first()
+    )
+
+
+def get_billing_events(
+    db: Session,
+    admin_id: int,
+    offset: int | None = None,
+    limit: int | None = None,
+    event_type: str | None = None,
+):
+    query = db.query(AdminBillingEvent).filter(
+        AdminBillingEvent.admin_id == admin_id
+    )
+    if event_type:
+        query = query.filter(AdminBillingEvent.event_type == event_type)
+    query = query.order_by(AdminBillingEvent.occurred_at.desc())
+    if offset:
+        query = query.offset(offset)
+    if limit:
+        query = query.limit(limit)
+    return query.all()
+
+
+def count_billing_events(db: Session, admin_id: int) -> int:
+    return (
+        db.query(AdminBillingEvent)
+        .filter(AdminBillingEvent.admin_id == admin_id)
+        .count()
+    )
+
+
+def set_billing_checkpoint(
+    db: Session, admin_id: int, note: str | None
+) -> AdminBilling:
+    billing = get_or_create_billing(db, admin_id)
+    billing.last_checkpoint_at = datetime.utcnow()
+    billing.last_checkpoint_bytes = billing.total_billable_bytes
+    billing.last_checkpoint_note = note
+    billing.updated_at = datetime.utcnow()
+    db.commit()
+    db.refresh(billing)
+    return billing

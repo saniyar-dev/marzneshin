@@ -1,6 +1,7 @@
 from typing import Optional, Annotated
 import os
 import secrets
+import logging
 
 import sqlalchemy
 from fastapi import APIRouter
@@ -15,7 +16,13 @@ from app.config.env import (
     BRAND_LOGO_MAX_BYTES,
 )
 from app.db import Session, crud
-from app.db.models import Admin as DBAdmin, Service, User
+from app.db.models import (
+    Admin as DBAdmin,
+    AdminBilling,
+    AdminBillingEvent,
+    Service,
+    User,
+)
 from app.dependencies import AdminDep, SudoAdminDep, DBDep
 from app.marznode.operations import update_user
 from app.models.admin import (
@@ -27,10 +34,16 @@ from app.models.admin import (
     AdminPartialModify,
     AdminResponse,
 )
+from app.models.billing import (
+    AdminBillingCheckpointCreate,
+    AdminBillingEventResponse,
+    AdminBillingResponse,
+)
 from app.models.service import ServiceResponse
 from app.models.user import UserResponse
 from app.utils.auth import create_admin_token
 
+logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Admin"], prefix="/admins")
 
 
@@ -278,3 +291,122 @@ def remove_admin(username: str, db: DBDep, admin: SudoAdminDep):
 
     crud.remove_admin(db, dbadmin)
     return {}
+
+
+def _build_billing_response(
+    db, dbadmin: DBAdmin, billing: AdminBilling | None
+) -> AdminBillingResponse:
+    total = billing.total_billable_bytes if billing else 0
+    checkpoint_bytes = billing.last_checkpoint_bytes if billing else None
+    unbilled = total - (checkpoint_bytes or 0)
+    if unbilled < 0:
+        unbilled = 0
+    return AdminBillingResponse(
+        admin_id=dbadmin.id,
+        username=dbadmin.username,
+        total_billable_bytes=total,
+        last_checkpoint_at=(billing.last_checkpoint_at if billing else None),
+        last_checkpoint_bytes=checkpoint_bytes,
+        last_checkpoint_note=(
+            billing.last_checkpoint_note if billing else None
+        ),
+        unbilled_bytes=unbilled,
+        event_count=(
+            crud.count_billing_events(db, dbadmin.id) if billing else 0
+        ),
+    )
+
+
+@router.get("/current/billing", response_model=AdminBillingResponse)
+def get_current_admin_billing(db: DBDep, admin: AdminDep):
+    dbadmin = crud.get_admin(db, admin.username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    billing = crud.get_billing(db, dbadmin.id)
+    return _build_billing_response(db, dbadmin, billing)
+
+
+@router.get(
+    "/current/billing/events",
+    response_model=list[AdminBillingEventResponse],
+)
+def get_current_admin_billing_events(
+    db: DBDep,
+    admin: AdminDep,
+    event_type: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
+):
+    dbadmin = crud.get_admin(db, admin.username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    return crud.get_billing_events(
+        db,
+        dbadmin.id,
+        offset=offset,
+        limit=limit,
+        event_type=event_type,
+    )
+
+
+@router.get("/{username}/billing", response_model=AdminBillingResponse)
+def get_admin_billing(username: str, db: DBDep, admin: SudoAdminDep):
+    dbadmin = crud.get_admin(db, username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    billing = crud.get_billing(db, dbadmin.id)
+    return _build_billing_response(db, dbadmin, billing)
+
+
+@router.get(
+    "/{username}/billing/events",
+    response_model=list[AdminBillingEventResponse],
+)
+def get_admin_billing_events(
+    username: str,
+    db: DBDep,
+    admin: SudoAdminDep,
+    event_type: str | None = None,
+    limit: int = 100,
+    offset: int = 0,
+):
+    dbadmin = crud.get_admin(db, username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+    return crud.get_billing_events(
+        db,
+        dbadmin.id,
+        offset=offset,
+        limit=limit,
+        event_type=event_type,
+    )
+
+
+@router.post(
+    "/{username}/billing/checkpoint",
+    response_model=AdminBillingResponse,
+)
+def set_admin_billing_checkpoint(
+    username: str,
+    payload: AdminBillingCheckpointCreate,
+    db: DBDep,
+    admin: SudoAdminDep,
+):
+    dbadmin = crud.get_admin(db, username)
+    if not dbadmin:
+        raise HTTPException(status_code=404, detail="Admin not found")
+
+    if dbadmin.is_sudo:
+        raise HTTPException(
+            status_code=403,
+            detail="Checkpoints are only for non-sudo admins.",
+        )
+
+    billing = crud.set_billing_checkpoint(db, dbadmin.id, payload.note)
+    logger.info(
+        "Billing checkpoint set for admin `%s` at %s bytes (note: %s)",
+        dbadmin.username,
+        billing.last_checkpoint_bytes,
+        payload.note,
+    )
+    return _build_billing_response(db, dbadmin, billing)

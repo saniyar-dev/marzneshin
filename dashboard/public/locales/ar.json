@@ -265,7 +265,28 @@
       "subscription-url-prefix": "بادئة عنوان URL للاشتراك",
       "sudo-privilage": "امتيازات المدير المتميز",
       "all-services-access": "الوصول إلى جميع الخدمات",
-      "users-data-usage": "استخدام بيانات المستخدمين"
+      "users-data-usage": "استخدام بيانات المستخدمين",
+      "billing": {
+        "title": "Billing",
+        "set_checkpoint": "Set checkpoint",
+        "total_billable_bytes": "Total billable bytes",
+        "unbilled_bytes": "Unbilled bytes",
+        "last_checkpoint_bytes": "Last checkpoint bytes",
+        "last_checkpoint_at": "Last checkpoint at",
+        "event_count": "Total events",
+        "events_title": "Recent events",
+        "event_type": "Type",
+        "event_user": "User",
+        "event_amount": "Amount",
+        "event_occurred_at": "When",
+        "no_events": "No billing events yet.",
+        "event_kinds": {
+          "initial_allocation": "Initial allocation",
+          "limit_increase": "Limit increase",
+          "manual_reset": "Manual reset",
+          "auto_reset": "Auto reset"
+        }
+      }
     },
     "hosts": {
       "xmux-settings": "إعدادات اكسموكس",

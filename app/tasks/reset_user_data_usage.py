@@ -36,7 +36,7 @@ async def reset_user_data_usage():
                 continue
 
             was_active = user.is_active
-            crud.reset_user_data_usage(db, user)
+            crud.reset_user_data_usage(db, user, kind="auto_reset")
             # make user active if limited on usage reset
             if user.is_active and not was_active:
                 marznode.operations.update_user(user)

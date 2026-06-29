@@ -1,5 +1,5 @@
 import { SidebarObject } from '@fishy/common/components';
-import { Box, Home, Paintbrush, ShieldCheck, Server, ServerCog, Settings, UsersIcon } from 'lucide-react';
+import { Box, Coins, Home, Paintbrush, ShieldCheck, Server, ServerCog, Settings, UsersIcon } from 'lucide-react';
 
 export const sidebarItems: SidebarObject = {
     Dashboard: [
@@ -72,6 +72,12 @@ export const sidebarItemsNonSudoAdmin: SidebarObject = {
             title: 'Users',
             to: '/users',
             icon: <UsersIcon />,
+            isParent: false,
+        },
+        {
+            title: 'Billing',
+            to: '/billing',
+            icon: <Coins />,
             isParent: false,
         },
     ],

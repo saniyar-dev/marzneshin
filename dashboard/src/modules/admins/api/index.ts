@@ -1,4 +1,5 @@
 export * from "./admins.query";
+export * from "./admin-billing.query";
 export * from "./admin.query";
 export * from "./current-admin.query";
 export * from "./update-admin.mutate";

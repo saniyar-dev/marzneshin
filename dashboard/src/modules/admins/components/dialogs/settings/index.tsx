@@ -4,7 +4,7 @@ import {
   SettingsDialogProps,
   SettingsDialog,
 } from "@fishy/common/components";
-import { type AdminType } from "@fishy/modules/admins";
+import { AdminBillingCardForAdmin, type AdminType } from "@fishy/modules/admins";
 import { type FC } from "react";
 import { AdminInfoTable } from "./admin-info";
 
@@ -27,7 +27,12 @@ export const AdminsSettingsDialog: FC<AdminsSettingsDialogProps> = ({
       <Awaiting
         Component={
           entity ? (
-            <AdminInfoTable admin={entity} />
+            <div className="flex flex-col gap-4">
+              <AdminInfoTable admin={entity} />
+              {!entity.is_sudo && (
+                <AdminBillingCardForAdmin username={entity.username} />
+              )}
+            </div>
           ) : (
             <div>Not Found</div>
           )
@@ -39,7 +44,7 @@ export const AdminsSettingsDialog: FC<AdminsSettingsDialogProps> = ({
   );
 };
 
-//
+// 
 //           <Tabs defaultValue="info" className="w-full h-full">
 //             <TabsList className="w-full bg-accent">
 //               <TabsTrigger className="w-full" value="info">

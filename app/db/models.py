@@ -157,7 +157,9 @@ class User(Base):
     username = Column(String(32), unique=True, index=True)
     key = Column(String(64), unique=True)
     sub_token = Column(String(128), unique=True, nullable=True, index=True)
-    marzban_username = Column(String(64), unique=True, nullable=True, index=True)
+    marzban_username = Column(
+        String(64), unique=True, nullable=True, index=True
+    )
     activated = Column(Boolean, nullable=False, default=True)
     enabled = Column(
         Boolean,
@@ -525,3 +527,37 @@ class Settings(Base):
     id = Column(Integer, primary_key=True, server_default=text("0"))
     subscription = Column(JSON, nullable=False)
     telegram = Column(JSON)
+
+
+class AdminBilling(Base):
+    __tablename__ = "admin_billing"
+
+    admin_id = Column(
+        Integer, ForeignKey("admins.id"), primary_key=True, index=True
+    )
+    admin = relationship("Admin")
+    total_billable_bytes = Column(
+        BigInteger,
+        nullable=False,
+        default=0,
+        server_default="0",
+    )
+    last_checkpoint_at = Column(DateTime, nullable=True)
+    last_checkpoint_bytes = Column(BigInteger, nullable=True)
+    last_checkpoint_note = Column(String(512), nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
+
+
+class AdminBillingEvent(Base):
+    __tablename__ = "admin_billing_events"
+
+    id = Column(Integer, primary_key=True)
+    admin_id = Column(Integer, ForeignKey("admins.id"), index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    event_type = Column(String(32), nullable=False)
+    bytes_amount = Column(BigInteger, nullable=False)
+    occurred_at = Column(DateTime, default=datetime.utcnow, index=True)
+    note = Column(String(512), nullable=True)

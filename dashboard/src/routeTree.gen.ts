@@ -51,6 +51,7 @@ const DashboardServicesLazyImport = createFileRoute('/_dashboard/services')()
 const DashboardNodesLazyImport = createFileRoute('/_dashboard/nodes')()
 const DashboardHostsLazyImport = createFileRoute('/_dashboard/hosts')()
 const DashboardBrandingLazyImport = createFileRoute('/_dashboard/branding')()
+const DashboardBillingLazyImport = createFileRoute('/_dashboard/billing')()
 const DashboardAdminsLazyImport = createFileRoute('/_dashboard/admins')()
 
 // Create/Update Routes
@@ -119,6 +120,14 @@ const DashboardBrandingLazyRoute = DashboardBrandingLazyImport.update({
   getParentRoute: () => DashboardRoute,
 } as any).lazy(() =>
   import('./routes/_dashboard/branding.lazy').then((d) => d.Route),
+)
+
+const DashboardBillingLazyRoute = DashboardBillingLazyImport.update({
+  id: '/billing',
+  path: '/billing',
+  getParentRoute: () => DashboardRoute,
+} as any).lazy(() =>
+  import('./routes/_dashboard/billing.lazy').then((d) => d.Route),
 )
 
 const DashboardAdminsLazyRoute = DashboardAdminsLazyImport.update({
@@ -331,6 +340,13 @@ declare module '@tanstack/react-router' {
       path: '/admins'
       fullPath: '/admins'
       preLoaderRoute: typeof DashboardAdminsLazyImport
+      parentRoute: typeof DashboardImport
+    }
+    '/_dashboard/billing': {
+      id: '/_dashboard/billing'
+      path: '/billing'
+      fullPath: '/billing'
+      preLoaderRoute: typeof DashboardBillingLazyImport
       parentRoute: typeof DashboardImport
     }
     '/_dashboard/branding': {
@@ -723,6 +739,7 @@ const DashboardUsersLazyRouteWithChildren =
 
 interface DashboardRouteChildren {
   DashboardAdminsLazyRoute: typeof DashboardAdminsLazyRouteWithChildren
+  DashboardBillingLazyRoute: typeof DashboardBillingLazyRoute
   DashboardBrandingLazyRoute: typeof DashboardBrandingLazyRoute
   DashboardHostsLazyRoute: typeof DashboardHostsLazyRouteWithChildren
   DashboardNodesLazyRoute: typeof DashboardNodesLazyRouteWithChildren
@@ -734,6 +751,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardAdminsLazyRoute: DashboardAdminsLazyRouteWithChildren,
+  DashboardBillingLazyRoute: DashboardBillingLazyRoute,
   DashboardBrandingLazyRoute: DashboardBrandingLazyRoute,
   DashboardHostsLazyRoute: DashboardHostsLazyRouteWithChildren,
   DashboardNodesLazyRoute: DashboardNodesLazyRouteWithChildren,
@@ -751,6 +769,7 @@ export interface FileRoutesByFullPath {
   '': typeof DashboardRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/admins': typeof DashboardAdminsLazyRouteWithChildren
+  '/billing': typeof DashboardBillingLazyRoute
   '/branding': typeof DashboardBrandingLazyRoute
   '/hosts': typeof DashboardHostsLazyRouteWithChildren
   '/nodes': typeof DashboardNodesLazyRouteWithChildren
@@ -789,6 +808,7 @@ export interface FileRoutesByTo {
   '': typeof AuthRouteWithChildren
   '/login': typeof AuthLoginRoute
   '/admins': typeof DashboardAdminsLazyRouteWithChildren
+  '/billing': typeof DashboardBillingLazyRoute
   '/branding': typeof DashboardBrandingLazyRoute
   '/hosts': typeof DashboardHostsLazyRouteWithChildren
   '/nodes': typeof DashboardNodesLazyRouteWithChildren
@@ -824,6 +844,7 @@ export interface FileRoutesById {
   '/_dashboard': typeof DashboardRouteWithChildren
   '/_auth/login': typeof AuthLoginRoute
   '/_dashboard/admins': typeof DashboardAdminsLazyRouteWithChildren
+  '/_dashboard/billing': typeof DashboardBillingLazyRoute
   '/_dashboard/branding': typeof DashboardBrandingLazyRoute
   '/_dashboard/hosts': typeof DashboardHostsLazyRouteWithChildren
   '/_dashboard/nodes': typeof DashboardNodesLazyRouteWithChildren
@@ -864,6 +885,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/admins'
+    | '/billing'
     | '/branding'
     | '/hosts'
     | '/nodes'
@@ -901,6 +923,7 @@ export interface FileRouteTypes {
     | ''
     | '/login'
     | '/admins'
+    | '/billing'
     | '/branding'
     | '/hosts'
     | '/nodes'
@@ -934,6 +957,7 @@ export interface FileRouteTypes {
     | '/_dashboard'
     | '/_auth/login'
     | '/_dashboard/admins'
+    | '/_dashboard/billing'
     | '/_dashboard/branding'
     | '/_dashboard/hosts'
     | '/_dashboard/nodes'
@@ -1003,6 +1027,7 @@ export const routeTree = rootRoute
       "filePath": "_dashboard.tsx",
       "children": [
         "/_dashboard/admins",
+        "/_dashboard/billing",
         "/_dashboard/branding",
         "/_dashboard/hosts",
         "/_dashboard/nodes",
@@ -1023,6 +1048,10 @@ export const routeTree = rootRoute
         "/_dashboard/admins/$adminId",
         "/_dashboard/admins/create"
       ]
+    },
+    "/_dashboard/billing": {
+      "filePath": "_dashboard/billing.lazy.tsx",
+      "parent": "/_dashboard"
     },
     "/_dashboard/branding": {
       "filePath": "_dashboard/branding.lazy.tsx",
