@@ -5,6 +5,9 @@ from datetime import datetime, timedelta, timezone
 from enum import Enum
 from types import NoneType
 from typing import List, Optional, Tuple, Union
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 from sqlalchemy import and_, update, select, func, cast, Date, or_
 from sqlalchemy.orm import Session, joinedload
